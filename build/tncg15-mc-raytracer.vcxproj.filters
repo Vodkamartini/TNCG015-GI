@@ -9,6 +9,9 @@
     <CustomBuild Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\glm" />
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{5E658937-3BC0-3EE9-8841-48A6543D05DF}</UniqueIdentifier>
     </Filter>
