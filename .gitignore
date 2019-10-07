@@ -4,7 +4,12 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Ignore everything in build folder
-build/*
+build/
+build/ALL_BUILD.vcxproj
+build/ZERO_CHECK.vcxproj
+build/tncg15-mc-raytracer.vcxproj
+build/tncg15-mc-raytracer.vcxproj.filters
+
 
 # Cmake files
 CMakeLists.txt.user
