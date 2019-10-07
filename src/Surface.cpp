@@ -5,6 +5,18 @@ Surface::Surface(const ColorDb& color, const int& model) : color(color), reflect
 		emission = ColorDb(20.0);
 }
 
+ColorDb Surface::reflect(const Ray& in, const Ray& out, const Direction& normal) const {
+	switch (reflectionModel) {
+	case LAMBERTIAN:
+		return lambertianReflection();
+	case SPECULAR:
+		return specularReflection();
+	default:
+		std::cout << "INVALID REFLECTION MODEL: " << reflectionModel << std::endl;
+		return ColorDb(0.0);
+	}
+}
+
 ColorDb Surface::lambertianReflection() const {
 	return color * reflectionCoefficient / M_PI;
 }
@@ -17,10 +29,23 @@ double Surface::GetReflectionCoefficient() const {
 	return reflectionCoefficient;
 }
 
-const ColorDb &Surface::getColor() const {
-	return HasReflectionModel(SPECULAR ? ColorDb(0.0) : color;
+Ray Surface::bounceRay(const Ray& in, const Vertex &position, const Direction& normal) const {
+	switch (reflectionModel) {
+	case LAMBERTIAN:
+		return in.sampleHemisphere(position, normal);
+	case SPECULAR:
+		return in.bounce(position, normal);
+	default:
+		std::cout << "INVALID REFLECTION MODEL: " << reflectionModel << std::endl;
+		Ray r;
+		return r;
+	}
 }
 
-const ColorDb& Surface::getEmission() const {
+const ColorDb& Surface::GetColor() const {
+	return HasReflectionModel(SPECULAR) ? ColorDb(0.0) : color;
+}
+
+const ColorDb& Surface::GetEmission() const {
 	return emission;
 }
