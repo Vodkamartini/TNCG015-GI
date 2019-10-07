@@ -81,5 +81,3 @@ Vertex Triangle::fromBaryCentric(float a, float b) const {
 double Triangle::area() const {
 	return 0.5 * glm::length(glm::cross(edge1(), edge2()));
 }
-
->>>>>>> 60911830b32339a2d5d396603cd73e6953dbf1c1
