@@ -1,4 +1,4 @@
-#include "../include/Triangle.h"
+#include "Triangle.h"
 
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Surface& s) {
 	positions[0] = v0;

@@ -1,4 +1,4 @@
-#include "../include/Ray.h"
+#include "Ray.h"
 
 Ray::Ray(Vertex& startPoint, Vertex& endPoint, ColorDb& c) {
 	start = startPoint;
@@ -22,13 +22,13 @@ void Ray::SetDirection(Direction& d) {
 	Ray::direction = d;
 }
 Ray Ray::sampleHemisphere(const Vertex& position, const Direction normal) const {
-	float rand1 = uniformRand();
-	float rand2 = uniformRand();
+	float rand1 = (float)uniformRand();
+	float rand2 = (float)uniformRand();
 
 	Direction helper = normal + Direction(1, 1, 1);
 	Direction tangent = glm::normalize(glm::cross(normal, helper));
 	float inclination = acos(sqrt(rand1));
-	float azimuth = 2 * M_PI * rand2;
+	float azimuth = 2 * (float)M_PI * rand2;
 	// Change the actual vector
 	Direction random_direction = normal;
 	random_direction = glm::normalize(glm::rotate(

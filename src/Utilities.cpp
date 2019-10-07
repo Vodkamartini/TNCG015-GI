@@ -1,4 +1,4 @@
-#include "../include/Utilities.h"
+#include "Utilities.h"
 
 double uniformRand() {
 	return DISTR(GENERATOR);

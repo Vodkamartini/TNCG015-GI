@@ -1,4 +1,4 @@
-#include "../include/Surface.h"
+#include "Surface.h"
 
 Surface::Surface(const ColorDb& color, const int& model) : color(color), reflectionModel(model) {
 	if (model == LIGHTSOURCE)
