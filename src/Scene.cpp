@@ -45,6 +45,27 @@ std::list<TriangleIntersection> Scene::detectIntersections(Ray ray) const {
 }
 
 ColorDb Scene::getLightContribution(const Vertex& point, const Direction& normal) const {
+	ColorDb color(0.0);
+	int lightSourceCount = 0;
+	double lightSourceArea = 0.0;
+
+	// Loop through all lightsources and for each lightsource, check its triangles
+	for each (LightSource l in lightsources)
+	{
+		for each (Triangle t in l.getTriangles)
+		{
+			lightSourceArea += t.area;
+			lightSourceCount++;
+			Vertex lightPoint = t.getRandomPoint();
+			Ray rayTowardsLightsource(point, glm::normalize(lightPoint - point));
+
+			std::list<TriangleIntersection> triangleIntersections = detectIntersections(rayTowardsLightsource);
+			TriangleIntersection firstIntersection = triangleIntersections.front();
+
+			double lightDistance = glm::distance(point, lightPoint);
+			double intersectionDistance = glm::distance(point, firstIntersection.point);
+		}
+	}
 
 }
 
