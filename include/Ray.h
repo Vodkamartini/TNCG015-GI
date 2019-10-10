@@ -9,7 +9,7 @@ class Ray {
 
 public:
 	// Ray is defined by a start point, an end point and a color
-	Ray() : start(0.0), end(0.0), color(0.0) {};
+	Ray() : start(0.0), end(0.0), color(0.0), direction(0.0) {};
 	Ray(Direction start, Direction end);
 	Ray(Vertex& startPoint, Vertex& endPoint, ColorDb& c);
 	~Ray() {};

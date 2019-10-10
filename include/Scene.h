@@ -7,6 +7,7 @@
 #include <glm/gtx/vector_angle.hpp>
 #include "Triangle.h"
 #include "Ray.h"
+#include "LightSource.h"
 
 struct TriangleIntersection {
 	Triangle triangle;
@@ -25,9 +26,13 @@ public:
 	std::list<TriangleIntersection> detectIntersections(Ray ray) const;
 	void importTriangles(std::vector<Triangle> triangles);
 	void importTriangle(Triangle& t);
+	void importLightSources(std::vector<LightSource> lightsources);
+	void importLightSource(LightSource& l);
+
 	ColorDb getLightContribution(const Vertex& point, const Direction& normal) const;
 
 private:
 	std::vector<Triangle> triangles;
+	std::vector<LightSource> lightsources;
 };
 #endif // SCENE_H

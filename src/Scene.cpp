@@ -4,6 +4,50 @@ Scene::Scene() {
 	createRoom();
 }
 
+void Scene::importTriangle(Triangle& t) {
+	triangles.push_back(t);
+}
+
+void Scene::importTriangles(std::vector<Triangle> triangles) {
+	for each (Triangle t in triangles)
+	{
+		Scene::importTriangle(t);
+	}
+}
+
+void Scene::importLightSource(LightSource& l) {
+	lightsources.push_back(l);
+}
+
+void Scene::importLightSources(std::vector<LightSource> lightSources) {
+	for each (LightSource l in lightSources)
+	{
+		Scene::importLightSource(l);
+	}
+}
+
+std::list<TriangleIntersection> Scene::detectIntersections(Ray ray) const {
+	std::list<TriangleIntersection> intersections = {};
+	for each (Triangle t in triangles)
+	{
+		TriangleIntersection ti;
+		Vertex intersection;
+		if (t.intersection(ray, intersection) == INTERSECTION)
+		{
+			// If the point intersects the triangle, add them to ti and push_back list
+			ti.triangle = t;
+			ti.point = intersection;
+			intersections.push_back(ti);
+		}
+	}
+	// Might want to add some sort of margin for intersection
+	return intersections;
+}
+
+ColorDb Scene::getLightContribution(const Vertex& point, const Direction& normal) const {
+
+}
+
 void Scene::createRoom() {
 	// The scene viewed from above:
 	// ^ = Camera 1 and its viewing direction (origo)
