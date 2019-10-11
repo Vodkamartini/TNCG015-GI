@@ -3,32 +3,37 @@
 
 bool Triangle::rayIntersection(Ray& r) {
 	
-	// Negative because of camera oriented along the negative z-axis
-	if (glm::dot(normal, r.getDirection()) == 0) {
-		return NOT_INTERSECTION; // Triangle and ray are parallel
+	// Calculate p and detarminant
+	Direction pvec = glm::cross(edge1(), r.getDirection());
+	float det = glm::dot(edge0(), pvec);
+
+	if (det < EPSILON) {
+		return NOT_INTERSECTION; // Triangle and ray are parallel --> No intersection
 	}
 	
-	float t = -(glm::dot(normal, glm::vec3(r.getStart())) + d) / glm::dot(normal, r.getDirection());	
-	
-	if (t < 0) {
-		return NOT_INTERSECTION; // Behind the rays origin
+	float invDet = 1 / det;
+
+	Direction tvec = glm::vec3(r.getStart() - v0);
+	float u = (glm::dot(tvec, pvec)) * invDet;
+	if (u < 0 || u > 1)
+	{
+		return NOT_INTERSECTION; // u is out of bounds --> No intersection
 	}
 
-	Vertex p = (r.getStart() + t) * glm::vec4(r.getDirection(), 0);
-	//Inside outside test
-	Vertex c0 = p - v0;
-	Vertex c1 = p - v1;
-	Vertex c2 = p - v2;
-	if (glm::dot(normal, glm::cross(edge0(), glm::vec3(c0))) > 0 &&
-		glm::dot(normal, glm::cross(edge1(), glm::vec3(c1))) > 0 &&
-		glm::dot(normal, glm::cross(edge2(), glm::vec3(c2))) > 0) 
+	Direction qvec = glm::cross(tvec, edge0());
+	float v = (glm::dot(glm::vec3(r.getDirection()), qvec)) * invDet;
+	if (v < 0 || u + v > 1)
 	{
-		return INTERSECTION;
+		return NOT_INTERSECTION; // v is out of bounds --> No intersection
 	}
+
+	float t = (glm::dot(edge1(), qvec)) * invDet;
+
+	return INTERSECTION; // We made it all the way through --> Intersection!
 }
 
 double Triangle::area() const {
-	return 0.5 * glm::length(glm::cross(edge1(), edge2()));
+	return 0.5 * glm::length(glm::cross(edge0(), edge1()));
 }
 
 float Triangle::getPlaneParam() const {
