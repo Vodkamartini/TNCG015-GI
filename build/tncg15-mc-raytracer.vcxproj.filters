@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Pixel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Triangle.cpp">
@@ -12,7 +21,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Pixel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Triangle.h">

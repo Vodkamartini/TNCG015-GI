@@ -1,7 +1,7 @@
 #include "Triangle.h"
 
 
-bool Triangle::rayIntersection(Ray& r) {
+bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
 	
 	// Calculate p and detarminant
 	Direction pvec = glm::cross(edge1(), r.getDirection());
@@ -27,8 +27,9 @@ bool Triangle::rayIntersection(Ray& r) {
 		return NOT_INTERSECTION; // v is out of bounds --> No intersection
 	}
 
-	float t = (glm::dot(edge1(), qvec)) * invDet;
-
+	
+	float t = (glm::dot(edge1(), qvec)) * invDet;	// t represents the distance from the ray's origin to the intersection point P
+	intersection = glm::vec4(glm::vec3(r.getStart()) + r.getDirection() * t, 0);	// update the intersection point
 	return INTERSECTION; // We made it all the way through --> Intersection!
 }
 

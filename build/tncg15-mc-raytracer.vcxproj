@@ -320,10 +320,16 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Camera.cpp" />
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Pixel.cpp" />
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Ray.cpp" />
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Scene.cpp" />
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Triangle.cpp" />
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\main.cpp" />
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Camera.h" />
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Pixel.h" />
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Ray.h" />
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Scene.h" />
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Triangle.h" />
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Utility.h" />
     <None Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\glm" />
