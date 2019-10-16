@@ -1,9 +1,5 @@
 #include "Pixel.h"
 
-Pixel::Pixel(ColorDbl c) {
-	color = c;
-}
-
 ColorDbl Pixel::getColor() const {
 	return color;
 }
