@@ -29,8 +29,13 @@ bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
 
 	
 	float t = (glm::dot(edge1(), qvec)) * invDet;	// t represents the distance from the ray's origin to the intersection point P
-	intersection = glm::vec4(glm::vec3(r.getStart()) + r.getDirection() * t, 0);	// update the intersection point
-	return INTERSECTION; // We made it all the way through --> Intersection!
+	
+	if (t > EPSILON) {
+		intersection = glm::vec4(glm::vec3(r.getStart()) + r.getDirection() * t, 0);	// update the intersection point
+		return INTERSECTION; // We made it all the way through --> Intersection!
+	}
+	
+	return NOT_INTERSECTION;
 }
 
 double Triangle::area() const {

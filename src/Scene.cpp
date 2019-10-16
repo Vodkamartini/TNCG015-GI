@@ -7,20 +7,19 @@ Scene::Scene() {
 /* Determines which Triangle is intersected by the ray by calling
  * rayIntersection for each Triangle in the scene. It then passes references
  * to the Triangle and the intersection point to the ray. */
-std::list<TriangleIntersection> Scene::detectIntersections(Ray ray) const {
-	std::list<TriangleIntersection> intersections = {};
+Intersection Scene::detectIntersection(Ray ray) const {
+	Intersection ti = std::make_pair(Triangle(), Vertex(0));
 
 	for (Triangle triangle : triangles) {
-		TriangleIntersection ti;
+
 		Vertex intersection;
 		if (triangle.rayIntersection(ray, intersection) == INTERSECTION) {
-			ti.triangle = triangle;
-			ti.point = intersection;
-			intersections.push_back(ti);
+			ti.first= triangle;
+			ti.second = intersection;
 		}
 	}
 
-	return intersections;
+	return ti;
 }
 
 void Scene::createRoom() {

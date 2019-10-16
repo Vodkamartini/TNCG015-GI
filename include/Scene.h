@@ -4,17 +4,20 @@
 #include <list>
 #include <vector>
 #include "Triangle.h"
-
+/*
 struct TriangleIntersection {
 	Triangle triangle;
-	Vertex point;
-};
+	Vertex point = Vertex(0);
+}; */
+
+using Intersection = std::pair<Triangle, Vertex>;
 
 class Scene {
 public:
 	Scene();
+	~Scene() {};
 	void createRoom();
-	std::list<TriangleIntersection> detectIntersections(Ray ray) const;
+	Intersection detectIntersection(Ray ray) const;
 private:
 	std::vector<Triangle> triangles;
 };
