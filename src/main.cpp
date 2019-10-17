@@ -1,11 +1,15 @@
-#include "Camera.h"
 #include "Scene.h"
+#include "Camera.h"
+
 
 
 int main() {
-	Scene scene;
+	Scene* scene;
+	scene = new Scene();
+	scene->createRoom();
+	
 	Camera cameron;
-
-
+	cameron.render(scene);
+	cameron.createImage();
 	return 0;
 }

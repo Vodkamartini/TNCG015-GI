@@ -22,6 +22,9 @@ public:
 	bool rayIntersection(Ray& r, Vertex& intersection);
 	double area() const;
 	float getPlaneParam() const;
+	ColorDbl getColor() {
+		return color;
+	}
 
 private:
 	Vertex v0, v1, v2;

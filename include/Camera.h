@@ -2,12 +2,15 @@
 #define CAMERA_H
 
 #include <vector>
-
+#include <iostream>
+#include <fstream>
 #include "Utility.h"
 #include "Pixel.h"
+#include "RayTree.h"
 
-const Vertex EYE_1(-2.0f, 0.0f, 0.0f, 0.0f);
+const Vertex EYE_1(4.0f, 0.0f, 0.0f, 0.0f);
 const Vertex EYE_2(-1.0f, 0.0f, 0.0f, 0.0f);
+const Vertex CAMERA_PLANE[4] = { Vertex(0.0f, -1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, 0.0f, 1.0f), Vertex(0.0f, -1.0f, 1.0f, 0.0f) };
 
 const bool USING_EYE_1 = true;
 
@@ -35,7 +38,7 @@ public:
 
 private:
 	size_t getPosition(size_t x, size_t y) {
-		return x + width * y
+		return x + width * y;
 	}
 };
 
@@ -45,8 +48,10 @@ private:
 class Camera {
 public:
 	Camera() { pixels = Array2D<Pixel>(WIDTH, HEIGHT); };
-	void render();
+	void render(Scene* scene);
 	void createImage();
+	double findMaxIntensity();
+
 private:
 	Array2D<Pixel> pixels;
 };

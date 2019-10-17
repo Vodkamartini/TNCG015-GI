@@ -12,10 +12,10 @@ Intersection Scene::detectIntersection(Ray ray) const {
 
 	for (Triangle triangle : triangles) {
 
-		Vertex intersection;
-		if (triangle.rayIntersection(ray, intersection) == INTERSECTION) {
+		Vertex intersectionPoint;
+		if (triangle.rayIntersection(ray, intersectionPoint) == INTERSECTION) {
 			ti.first= triangle;
-			ti.second = intersection;
+			ti.second = intersectionPoint;
 		}
 	}
 
@@ -85,4 +85,12 @@ void Scene::createRoom() {
 	//Right back
 	triangles.push_back(Triangle(eTop, eBottom, fBottom, White));
 	triangles.push_back(Triangle(fBottom, fTop, eTop, White));
+}
+
+void Scene::createTestRoom() {
+	Vertex aTop(-3.0f, 0.0f, 5.0f, 0.0), aBottom(-3.0f, 0.0f, -5.0f, 0.0);
+	Vertex bBottom(0.0f, -6.0f, -5.0f, 0.0);
+	const ColorDbl Red = ColorDbl(255, 0, 0);
+	triangles.push_back(Triangle(aTop, bBottom, aBottom, Red));
+
 }
