@@ -6,3 +6,7 @@ Vertex Ray::getStart() {
 Direction Ray::getDirection() {
 	return glm::vec3(end - start);
 }
+
+ColorDbl Ray::getColor() {
+	return color;
+}

@@ -12,6 +12,7 @@ public:
 	Ray(Vertex start, Vertex end) : start(start), end(end) { color = ColorDbl(0); };
 	~Ray() {};
 	Vertex getStart();
+	ColorDbl getColor();
 	Direction getDirection();
 
 private:

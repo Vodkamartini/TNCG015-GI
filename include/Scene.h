@@ -14,7 +14,13 @@ public:
 	void createRoom();
 	void createTestRoom();
 	Intersection detectIntersection(Ray ray) const;
+
+	int getTriangles() {
+		return triangles.size();
+	}
+
 private:
+	std::vector<Vertex> vertices;
 	std::vector<Triangle> triangles;
 };
 

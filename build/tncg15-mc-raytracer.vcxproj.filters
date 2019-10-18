@@ -10,6 +10,9 @@
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\RayTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,6 +31,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\RayTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Scene.h">

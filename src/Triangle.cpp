@@ -1,4 +1,5 @@
 #include "Triangle.h"
+#include <iostream>
 
 
 bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
@@ -34,7 +35,6 @@ bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
 		intersection = glm::vec4(glm::vec3(r.getStart()) + r.getDirection() * t, 0);	// update the intersection point
 		return INTERSECTION; // We made it all the way through --> Intersection!
 	}
-	
 	return NOT_INTERSECTION;
 }
 

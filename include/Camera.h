@@ -8,7 +8,7 @@
 #include "Pixel.h"
 #include "RayTree.h"
 
-const Vertex EYE_1(4.0f, 0.0f, 0.0f, 0.0f);
+const Vertex EYE_1(-2.0f, 0.0f, 0.0f, 0.0f);
 const Vertex EYE_2(-1.0f, 0.0f, 0.0f, 0.0f);
 const Vertex CAMERA_PLANE[4] = { Vertex(0.0f, -1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, -1.0f, 0.0f), Vertex(0.0f, 1.0f, 0.0f, 1.0f), Vertex(0.0f, -1.0f, 1.0f, 0.0f) };
 

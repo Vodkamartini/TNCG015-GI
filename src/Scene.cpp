@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 Scene::Scene() {
-	createRoom();
+	//createRoom();
 }
 
 /* Determines which Triangle is intersected by the ray by calling
@@ -23,6 +23,25 @@ Intersection Scene::detectIntersection(Ray ray) const {
 }
 
 void Scene::createRoom() {
+
+	vertices =
+	{
+		Vertex(0.0f, 6.0f, 5.0f, 1.0f),		//  (0)		d-top
+		Vertex(0.0f, 6.0f, -5.0f, 1.0f),	//	(1)		d-bottom
+		Vertex(10.0f, 6.0f, 5.0f, 1.0f),	//	(2)		b-top
+		Vertex(10.0f, 6.0f, -5.0f, 1.0f),	//	(3)		b-bottom
+		Vertex(13.0f, 0.0f, 5.0f, 1.0f),	//	(4)		a-top
+		Vertex(13.0f, 0.0f, -5.0f, 1.0f),	//	(5)		a-bottom
+		Vertex(10.0f, -6.0f, 5.0f, 1.0f),	//	(6)		c-top
+		Vertex(10.0f, -6.0f, -5.0f, 1.0f),	//	(7)		c-bottom
+		Vertex(0.0f, -6.0f, 5.0f, 1.0f),	//	(8)		e-top
+		Vertex(0.0f, -6.0f, -5.0f, 1.0f),	//	(9)		e-bottom
+		Vertex(-3.0f, 0.0f, 5.0f, 1.0f),	//	(10)	f-top
+		Vertex(-3.0f, 0.0f, -5.0f, 1.0f),	//	(11)	f-bottom
+		Vertex(5.0f, 0.0f, 5.0f, 1.0f),		//	(12)
+		Vertex(5.0f, 0.0f, -5.0f, 1.0f)		//	(13)
+	};
+
 	// The scene viewed from above:
 	// ^ = Camera 1 and its viewing direction (origo)
 	// v = camera 2 and its viewing direction
@@ -34,63 +53,76 @@ void Scene::createRoom() {
 	//        \     /    <--- BACK
 	//			 f
 	//           
-	//			 ^ z direction
+	//			 ^ z-direction
 	//           | 
-	//           |-----> x direction
+	//       <---|  y-direction
 
-
-	Vertex aTop(-3.0f, 0.0f, 5.0f, 0.0), aBottom(-3.0f, 0.0f, -5.0f, 0.0);
-	Vertex bTop(0.0f, -6.0f, 5.0f, 0.0), bBottom(0.0f, -6.0f, -5.0f, 0.0);
-	Vertex cTop(0.0f, 6.0f, 5.0f, 0.0), cBottom(0.0f, 6.0f, -5.0f, 0.0);
-	Vertex dTop(10.0f, -6.0f, 5.0f, 0.0), dBottom(10.0f, -6.0f, -5.0f, 0.0);
-	Vertex eTop(10.0f, 6.0f, 5.0f, 0.0), eBottom(10.0f, 6.0f, -5.0f, 0.0);
-	Vertex fTop(13.0f, 0.0f, 5.0f, 0.0), fBottom(13.0f, 0.0f, -5.0f, 0.0);
-
-	const ColorDbl Red = ColorDbl(255, 0, 0);
-	const ColorDbl Green = ColorDbl(0, 255, 0);
+	const ColorDbl Red = ColorDbl(240, 0, 0);
+	const ColorDbl Green = ColorDbl(0, 240, 0);
+	const ColorDbl Blue = ColorDbl(0, 0, 240);
 	const ColorDbl White = ColorDbl(255, 255, 255);
 
-	//Floor
-	triangles.push_back(Triangle(bBottom, cBottom, aBottom, White));
-	triangles.push_back(Triangle(bBottom, dBottom, cBottom, White));
-	triangles.push_back(Triangle(dBottom, eBottom, cBottom, White));
-	triangles.push_back(Triangle(dBottom, fBottom, eBottom, White));
+	//Floor (normals point up)
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(7), vertices.at(5), White));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(1), vertices.at(7), White));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(9), vertices.at(7), White));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(11), vertices.at(9), White));
 
-	//Roof
-	triangles.push_back(Triangle(bTop, cTop, aTop, White));
-	triangles.push_back(Triangle(bTop, dTop, cTop, White));
-	triangles.push_back(Triangle(dTop, eTop, cTop, White));
-	triangles.push_back(Triangle(dTop, fTop, eTop, White));
+	//Roof (normals point down)
+	triangles.push_back(Triangle(vertices.at(2), vertices.at(4), vertices.at(6), White));
+	triangles.push_back(Triangle(vertices.at(2), vertices.at(6), vertices.at(0), White));
+	triangles.push_back(Triangle(vertices.at(0), vertices.at(6), vertices.at(8), White));
+	triangles.push_back(Triangle(vertices.at(0), vertices.at(8), vertices.at(10), White));
 
-	//Left middle
-	triangles.push_back(Triangle(bTop, bBottom, dBottom, Red));
-	triangles.push_back(Triangle(dBottom, dTop, bTop, Red));
+	//Left middle (normals point right)
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(2), vertices.at(0), Green));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(0), vertices.at(1), Green));
 
-	//Left front
-	triangles.push_back(Triangle(aTop, aBottom, bBottom, Red));
-	triangles.push_back(Triangle(bBottom, bTop, aTop, Red));
+	//Left front (normals point right)
+	triangles.push_back(Triangle(vertices.at(5), vertices.at(4), vertices.at(2), Green));
+	triangles.push_back(Triangle(vertices.at(5), vertices.at(2), vertices.at(3), Green));
 
-	//Left back
-	triangles.push_back(Triangle(dTop, dBottom, fBottom, Red));
-	triangles.push_back(Triangle(fBottom, fTop, dTop, Red));
+	//Left back (normals point right)
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(0), vertices.at(10), Green));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(10), vertices.at(11), Green));
 
-	//Right middle
-	triangles.push_back(Triangle(cTop, cBottom, eBottom, Green));
-	triangles.push_back(Triangle(eBottom, eTop, cTop, Green));
+	//Right middle (normals pointing left)
+	triangles.push_back(Triangle(vertices.at(9), vertices.at(8), vertices.at(6), Blue));
+	triangles.push_back(Triangle(vertices.at(9), vertices.at(6), vertices.at(7), Blue));
 
-	//Right front
-	triangles.push_back(Triangle(aTop, aBottom, cBottom, Green));
-	triangles.push_back(Triangle(cBottom, cTop, aTop, Green));
+	//Right front (normals pointing left)
+	triangles.push_back(Triangle(vertices.at(7), vertices.at(6), vertices.at(4), Blue));
+	triangles.push_back(Triangle(vertices.at(7), vertices.at(4), vertices.at(5), Blue));
 
-	//Right back
-	triangles.push_back(Triangle(eTop, eBottom, fBottom, White));
-	triangles.push_back(Triangle(fBottom, fTop, eTop, White));
+	//Right back (normals pointing left)
+	triangles.push_back(Triangle(vertices.at(11), vertices.at(10), vertices.at(8), Red));
+	triangles.push_back(Triangle(vertices.at(11), vertices.at(8), vertices.at(9), Red));
+
+
+
+	/*
+	Vertex aTop(-3.0f, 0.0f, 5.0f, 1.0), aBottom(-3.0f, 0.0f, -5.0f, 1.0);
+	Vertex bTop(0.0f, -6.0f, 5.0f, 1.0), bBottom(0.0f, -6.0f, -5.0f, 1.0);
+	Vertex cTop(0.0f, 6.0f, 5.0f,  1.0), cBottom(0.0f, 6.0f, -5.0f,  1.0);
+	Vertex dTop(10.0f, -6.0f, 5.0f,1.0), dBottom(10.0f, -6.0f, -5.0f,1.0);
+	Vertex eTop(10.0f, 6.0f, 5.0f, 1.0), eBottom(10.0f, 6.0f, -5.0f, 1.0);
+	Vertex fTop(13.0f, 0.0f, 5.0f, 1.0), fBottom(13.0f, 0.0f, -5.0f, 1.0);
+	*/
 }
 
 void Scene::createTestRoom() {
-	Vertex aTop(-3.0f, 0.0f, 5.0f, 0.0), aBottom(-3.0f, 0.0f, -5.0f, 0.0);
-	Vertex bBottom(0.0f, -6.0f, -5.0f, 0.0);
-	const ColorDbl Red = ColorDbl(255, 0, 0);
-	triangles.push_back(Triangle(aTop, bBottom, aBottom, Red));
+	vertices =
+	{
+		Vertex(10.0f, -6.0f, 5.0f, 1.0f),	//	(0)		c-top
+		Vertex(10.0f, -6.0f, -5.0f, 1.0f),	//	(1)		c-bottom
+		Vertex(10.0f, 6.0f, 5.0f, 1.0f),	//	(2)		b-top
+		Vertex(10.0f, 6.0f, -5.0f, 1.0f),	//	(3)		b-bottom
+	};
+
+	ColorDbl Yellow = ColorDbl(0, 255, 255);
+
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(2), vertices.at(1), Yellow));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(3), vertices.at(2), Yellow));
+
 
 }
