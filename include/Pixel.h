@@ -8,7 +8,7 @@
 class Pixel {
 public:
 	Pixel() : color(ColorDbl(0)) {};
-	Pixel(ColorDbl c) : color(c) {};
+	Pixel(ColorDbl c) : color(c){};
 
 	void setColor(ColorDbl& color);
 	void addRay(Ray& ray);

@@ -1,63 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Camera.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Pixel.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\Pixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Ray.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\RayTree.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\RayTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Scene.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\Triangle.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\src\main.cpp">
+    <ClCompile Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Camera.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Pixel.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Pixel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Ray.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\RayTree.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\RayTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Scene.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Triangle.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\Utility.h">
+    <ClInclude Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\include\glm" />
+    <None Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\include\glm" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{F3A30D43-8A28-312E-BAD2-9164E7C00892}</UniqueIdentifier>
+      <UniqueIdentifier>{15D6E72B-3380-3205-87C2-9B502431AB48}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{5E658937-3BC0-3EE9-8841-48A6543D05DF}</UniqueIdentifier>
+      <UniqueIdentifier>{C799B19F-F8D3-362E-A081-317F0AB46219}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

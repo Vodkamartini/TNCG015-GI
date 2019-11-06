@@ -26,22 +26,19 @@ void Camera::render(Scene* scene) {
 	Pixel thisPixel = Pixel();
 	RayTree thisTree = RayTree(scene);
 
-	float pixelsize = 2 / (float)(HEIGHT * WIDTH);
 	float pixelSizeY = 2 / (float)(WIDTH);
 	float pixelSizeZ = 2 / (float)(HEIGHT);
-	float pixelCenter = pixelsize / 2;
-	
 	//Camera plane params
-	float x = 0.0f, y = 1.0f - pixelSizeY, z = 1.0f - pixelSizeZ;
-
+	float x = 0.0f, y = -0.99875f, z = -0.99875f;
 	Vertex active_eye = USING_EYE_1 ? EYE_1 : EYE_2;
 	for (int i = 0; i < HEIGHT; i++) {
-		z = 1.0 - pixelSizeY;
+		z = -0.99875f;
 		for (int j = 0; j < WIDTH; j++) {
 			
 			finalColor = ColorDbl(0.0, 0.0, 0.0);			// 1. Reset color
 			thisRay = Ray(active_eye, Vertex(x,y,z,1.0f));	// 2. Cast ray from eye to pixel
 			//std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl;
+
 			finalColor = thisTree.trace(thisRay);			// 3. Get the color of hit
 			thisPixel = Pixel(finalColor);					// 4. Set pixel color
 			pixels.set(thisPixel,i,j);						// 5. Add pixel to 2D array
@@ -56,9 +53,9 @@ void Camera::render(Scene* scene) {
 			//std::cout << "r: " << finalColor.r << " g: " << finalColor.g << " " << " b: " << finalColor.b << std::endl;
 			*/
 	
-			z -= pixelSizeY;
+			z += pixelSizeY;
 		}
-		y -= pixelSizeZ;
+		y += pixelSizeZ;
 	}
 	std::cout << "\rDone!" << std::endl;
 }

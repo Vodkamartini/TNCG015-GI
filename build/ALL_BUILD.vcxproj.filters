@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\Users\Martini\Documents\Visual Studio 2019\Repos\TNCG015-GI\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\nils_\Documents\TNCG15\Project\TNCG015-GI\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
