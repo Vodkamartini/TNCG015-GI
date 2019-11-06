@@ -6,7 +6,7 @@
 int main() {
 	Scene* scene;
 	scene = new Scene();
-	scene->createTestRoom();
+	scene->createRoom();
 	std::cout << "Triangles in scene: " << scene->getTriangles() << std::endl;
 	
 	Camera cameron;
