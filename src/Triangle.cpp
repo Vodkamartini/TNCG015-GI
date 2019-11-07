@@ -13,13 +13,13 @@ bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
 	double u = glm::dot(glm::vec3(P), glm::vec3(T)) / glm::dot(glm::vec3(P), edge0());
 	double v = glm::dot(glm::vec3(Q), D) / glm::dot(glm::vec3(P), edge0());
 
-	//if (t > r.t) return false;
+	if (t > r.getClosestIntersection()) return NOT_INTERSECTION;
 
 	if ((t > EPSILON) && (u <= 1) && (u >= 0) && (v <= 1) && (v >= 0) && (u + v <= 1))
 	{
-		//ray.t = t;
-		//r.objectNormal = normal;
-		//ray.intersection = a + E1 * u + E2 * v + normal * 0.01;
+		r.setClosestIntersection(t);
+		//r.setObjectNormal(normal);
+		//r.setIntersection(v0 + glm::vec4( edge0()*(float)u + edge1()*(float)v + normal * 0.01f, 1.0f));
 		return INTERSECTION;
 	}
 
