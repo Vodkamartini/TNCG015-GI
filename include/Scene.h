@@ -7,7 +7,7 @@
 #include "Tetrahedron.h"
 #include "ImplicitSphere.h"
 
-using Intersection = std::pair<Triangle, Vertex>;
+//using Intersection = std::pair<Triangle, Vertex>;
 
 class Scene {
 public:
@@ -17,10 +17,14 @@ public:
 	void createTestRoom();
 	void addTetrahedron();
 	void addImplicitSphere();
-	Intersection detectIntersection(Ray ray) const;
+	bool detectIntersection(Ray ray) const;
 
-	int getTriangles() {
+	size_t getTriangles() {
 		return triangles.size();
+	}
+
+	size_t getImplicitSpheres() {
+		return spheres.size();
 	}
 
 private:

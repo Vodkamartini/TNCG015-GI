@@ -10,6 +10,7 @@ int main() {
 	scene->addTetrahedron();
 	scene->addImplicitSphere();
 	std::cout << "Triangles in scene: " << scene->getTriangles() << std::endl;
+	std::cout << "Spheres in scene: " << scene->getImplicitSpheres() << std::endl;
 	
 	Camera cameron;
 	cameron.render(scene);

@@ -19,7 +19,7 @@ public:
 		d = getPlaneParam();
 	};
 
-	bool rayIntersection(Ray& r, Vertex& intersection);
+	bool rayIntersection(Ray& r);
 	double area() const;
 	float getPlaneParam() const;
 	ColorDbl getColor() {

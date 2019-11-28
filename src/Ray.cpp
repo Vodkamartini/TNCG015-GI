@@ -21,7 +21,7 @@ void Ray::setClosestIntersection(double tnew) {
 ColorDbl Ray::getColor() const {
 	return color;
 }
-/*
-void Ray::setIntersection(Vertex i) {
-	intersection = i;
-}*/
+
+void Ray::setIntersection(Intersection i) {
+	intersection = Intersection(i.position, i.color, i.distanceToRayOrigin);
+}

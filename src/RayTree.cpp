@@ -12,8 +12,8 @@ RayTree::Node RayTree::createRayTree(Ray& ray) {
 
 ColorDbl RayTree::trace(Ray& ray) {
 	Node root = createRayTree(ray);
-
-	ColorDbl pixelColor = root.intersection.first.getColor();
+	
+	ColorDbl pixelColor = root.intersection.color;
 	destroyNodeTree(&root);
 	return pixelColor;
 }

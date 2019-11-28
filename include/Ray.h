@@ -19,13 +19,15 @@ public:
 	//void setObjectNormal(Direction dir) { objectNormal = dir; }
 	double getClosestIntersection() const;
 	void setClosestIntersection(double tnew);
-	//void setIntersection(Vertex i);
+	bool hasIntersection() { return intersection.initialized; };
+	Intersection getIntersection() { return intersection; };
+	void setIntersection(Intersection i);
 private:
 	Vertex start;
 	Vertex end;
 	double t = 10000;
 	ColorDbl color;
-	//Vertex intersection;
+	Intersection intersection;
 	//Direction objectNormal;
 };
 

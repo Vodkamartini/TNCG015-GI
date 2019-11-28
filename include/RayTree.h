@@ -17,7 +17,7 @@ private:
 	struct Node {
 		Node(Node* parentIn, Ray rayIn, Scene* scene) 
 			: parent(parentIn), reflected(nullptr), refracted(nullptr), ray(rayIn) {
-			intersection = scene->detectIntersection(ray);
+			scene->detectIntersection(ray);
 		}
 
 

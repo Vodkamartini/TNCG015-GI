@@ -19,7 +19,7 @@ double Camera::findMaxIntensity() {
 void Camera::render(Scene* scene) {
 
 	int count = 0, total = WIDTH * HEIGHT;
-	std::cout << "Casting rays..." << std::endl;
+	std::cout << "\nCasting rays..." << std::endl;
 
 	ColorDbl finalColor = ColorDbl(0.0, 0.0, 0.0);
 	Ray thisRay;

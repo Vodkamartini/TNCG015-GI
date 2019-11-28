@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
+bool Triangle::rayIntersection(Ray& r) {
 	
 	glm::vec4 T = r.getStart() - v0;
 	glm::vec3 D = r.getDirection();
@@ -20,7 +20,10 @@ bool Triangle::rayIntersection(Ray& r, Vertex& intersection) {
 		r.setClosestIntersection(t);
 		//r.setObjectNormal(normal);
 		//r.setIntersection(v0 + glm::vec4( edge0()*(float)u + edge1()*(float)v + normal * 0.01f, 1.0f));
-		return INTERSECTION;
+		if (!r.hasIntersection() || r.getIntersection().distanceToRayOrigin > t) {
+			r.setIntersection(Intersection(r.getStart() + glm::vec4((float)t * r.getDirection(), 1.0), r.getColor(), t));
+			return INTERSECTION;
+		}
 	}
 
 	return NOT_INTERSECTION;
