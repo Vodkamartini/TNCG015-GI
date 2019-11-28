@@ -4,6 +4,8 @@
 #include <list>
 #include <vector>
 #include "Triangle.h"
+#include "Tetrahedron.h"
+#include "ImplicitSphere.h"
 
 using Intersection = std::pair<Triangle, Vertex>;
 
@@ -13,6 +15,8 @@ public:
 	~Scene() {};
 	void createRoom();
 	void createTestRoom();
+	void addTetrahedron();
+	void addImplicitSphere();
 	Intersection detectIntersection(Ray ray) const;
 
 	int getTriangles() {

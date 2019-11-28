@@ -53,10 +53,10 @@ void Scene::createRoom() {
 	//        \     /    <--- BACK
 	//			 f
 	//           
-	//			 ^ z-direction
+	//			 ^ x-direction
 	//           | 
 	//       <---|  y-direction
-
+	//		z-direction UPWARDS
 	const ColorDbl Red = ColorDbl(240, 0, 0);
 	const ColorDbl Green = ColorDbl(0, 240, 0);
 	const ColorDbl Blue = ColorDbl(0, 0, 240);
@@ -108,6 +108,19 @@ void Scene::createRoom() {
 	Vertex eTop(10.0f, 6.0f, 5.0f, 1.0), eBottom(10.0f, 6.0f, -5.0f, 1.0);
 	Vertex fTop(13.0f, 0.0f, 5.0f, 1.0), fBottom(13.0f, 0.0f, -5.0f, 1.0);
 	*/
+}
+
+void Scene::addTetrahedron() {
+	Tetrahedron tetra = Tetrahedron();
+	for each (Triangle t in tetra.getTriangles())
+	{
+		triangles.push_back(t);
+	}
+}
+
+void Scene::addImplicitSphere() {
+	ImplicitSphere sphere = ImplicitSphere(1.0f, Vertex(6.0f, -4.0f, 3.0f, 1.0f), ColorDbl(0,130,130));
+
 }
 
 void Scene::createTestRoom() {
