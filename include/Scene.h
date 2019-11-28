@@ -26,6 +26,7 @@ public:
 private:
 	std::vector<Vertex> vertices;
 	std::vector<Triangle> triangles;
+	std::vector<ImplicitSphere> spheres;
 };
 
 #endif // !SCENE_H

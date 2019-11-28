@@ -3,7 +3,7 @@
 bool ImplicitSphere::rayIntersection(Ray& r) {
 	float a = 1; //Dot product of the ray direction with itself is always 1.
 	glm::vec3 L = r.getStart() - center;
-	float b = 2.0f*glm::dot(r.getDirection(), L);
+	float b = glm::dot(2.0f * r.getDirection(), L);
 	float c = glm::dot(L, L) - radiusSquared;
 	
 	float d0, d1;

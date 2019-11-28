@@ -19,6 +19,9 @@ Intersection Scene::detectIntersection(Ray ray) const {
 		}
 	}
 
+	for (ImplicitSphere sphere : spheres) {
+		sphere.rayIntersection(ray);
+	}
 	return ti;
 }
 
@@ -119,8 +122,8 @@ void Scene::addTetrahedron() {
 }
 
 void Scene::addImplicitSphere() {
-	ImplicitSphere sphere = ImplicitSphere(1.0f, Vertex(6.0f, -4.0f, 3.0f, 1.0f), ColorDbl(0,130,130));
-
+	ImplicitSphere sphere = ImplicitSphere(2.0f, Vertex(6.0f, -4.0f, 3.0f, 1.0f), ColorDbl(0,130,130));
+	spheres.push_back(sphere);
 }
 
 void Scene::createTestRoom() {
