@@ -14,6 +14,7 @@ public:
 	Vertex getStart() const;
 	Vertex getEnd() const;
 	ColorDbl getColor() const;
+	void setColor(ColorDbl c);
 	Direction getDirection() const;
 	//Direction getNormal() const { return objectNormal; }
 	//void setObjectNormal(Direction dir) { objectNormal = dir; }

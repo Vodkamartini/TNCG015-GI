@@ -7,7 +7,7 @@ Vertex Ray::getEnd() const {
 	return end;
 }
 Direction Ray::getDirection() const {
-	return glm::vec3(end - start);
+	return glm::normalize(glm::vec3(end - start));
 }
 
 double Ray::getClosestIntersection() const {
@@ -20,6 +20,10 @@ void Ray::setClosestIntersection(double tnew) {
 
 ColorDbl Ray::getColor() const {
 	return color;
+}
+
+void Ray::setColor(ColorDbl c) {
+	color = c;
 }
 
 void Ray::setIntersection(Intersection i) {

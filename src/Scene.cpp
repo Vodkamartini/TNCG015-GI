@@ -7,7 +7,7 @@ Scene::Scene() {
 /* Determines which Triangle is intersected by the ray by calling
  * rayIntersection for each Triangle in the scene. It then passes references
  * to the Triangle and the intersection point to the ray. */
-bool Scene::detectIntersection(Ray ray) const {
+bool Scene::detectIntersection(Ray& ray) const {
 
 	for (Triangle triangle : triangles) {
 		triangle.rayIntersection(ray);
@@ -22,6 +22,7 @@ bool Scene::detectIntersection(Ray ray) const {
 		return false;
 	}
 
+	ray.setColor(ray.getIntersection().color);
 	return true;
 }
 
@@ -101,8 +102,6 @@ void Scene::createRoom() {
 	triangles.push_back(Triangle(vertices.at(11), vertices.at(10), vertices.at(8), Red));
 	triangles.push_back(Triangle(vertices.at(11), vertices.at(8), vertices.at(9), Red));
 
-
-
 	/*
 	Vertex aTop(-3.0f, 0.0f, 5.0f, 1.0), aBottom(-3.0f, 0.0f, -5.0f, 1.0);
 	Vertex bTop(0.0f, -6.0f, 5.0f, 1.0), bBottom(0.0f, -6.0f, -5.0f, 1.0);
@@ -122,7 +121,7 @@ void Scene::addTetrahedron() {
 }
 
 void Scene::addImplicitSphere() {
-	ImplicitSphere sphere = ImplicitSphere(2.0f, Vertex(6.0f, -4.0f, 3.0f, 1.0f), ColorDbl(0,130,130));
+	ImplicitSphere sphere = ImplicitSphere(1.0f, Vertex(5.f, -3.f, 2.f, 0.0f), ColorDbl(255,211,0));
 	spheres.push_back(sphere);
 }
 
@@ -135,7 +134,7 @@ void Scene::createTestRoom() {
 		Vertex(10.0f, 6.0f, -5.0f, 1.0f),	//	(3)		b-bottom
 	};
 
-	ColorDbl Yellow = ColorDbl(0, 255, 255);
+	ColorDbl Yellow = ColorDbl(255, 211, 0);
 
 	triangles.push_back(Triangle(vertices.at(1), vertices.at(2), vertices.at(1), Yellow));
 	triangles.push_back(Triangle(vertices.at(1), vertices.at(3), vertices.at(2), Yellow));

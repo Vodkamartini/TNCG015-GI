@@ -17,7 +17,7 @@ public:
 	void createTestRoom();
 	void addTetrahedron();
 	void addImplicitSphere();
-	bool detectIntersection(Ray ray) const;
+	bool detectIntersection(Ray& ray) const;
 
 	size_t getTriangles() {
 		return triangles.size();

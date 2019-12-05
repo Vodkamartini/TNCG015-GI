@@ -1,7 +1,7 @@
 #include "ImplicitSphere.h"
 
 bool ImplicitSphere::rayIntersection(Ray& r) {
-	float a = 1; //Dot product of the ray direction with itself is always 1.
+	float a = 1.f; //Dot product of the ray direction with itself is always 1.
 	glm::vec3 L = r.getStart() - center;
 	float b = glm::dot(2.0f * r.getDirection(), L);
 	float c = glm::dot(L, L) - radiusSquared;
@@ -20,6 +20,11 @@ bool ImplicitSphere::rayIntersection(Ray& r) {
 	
 	if (abs(d0) < EPSILON)
 		return false;
+
+	if (!r.hasIntersection() || r.getIntersection().distanceToRayOrigin > d0) {
+		Vertex intersectionPoint = Vertex(r.getStart() + glm::vec4(d0 * r.getDirection(), 1.0f));
+		r.setIntersection(Intersection(intersectionPoint, color, d0));
+	}
 
 	return true;
 }

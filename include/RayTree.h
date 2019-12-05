@@ -20,11 +20,9 @@ private:
 			scene->detectIntersection(ray);
 		}
 
-
 		Node* parent;
 		Node* reflected;
 		Node* refracted;
-		Intersection intersection;
 		Ray ray;
 		float reflectionCoefficient = 1.0f;
 	};
