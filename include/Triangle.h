@@ -3,6 +3,7 @@
 
 #include "Utility.h"
 #include "Ray.h"
+#include "Material.h"
 
 const bool INTERSECTION = true;
 const bool NOT_INTERSECTION = false;
@@ -23,12 +24,13 @@ public:
 	double area() const;
 	float getPlaneParam() const;
 	ColorDbl getColor() {
-		return color;
+		return material.getColor();
 	}
 
 private:
 	Vertex v0, v1, v2;
 	ColorDbl color;
+	Material material;
 	Direction normal;
 	Direction edge0() const { return v1 - v0; };
 	Direction edge1() const { return v2 - v0; };

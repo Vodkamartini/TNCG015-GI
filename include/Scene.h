@@ -6,6 +6,7 @@
 #include "Triangle.h"
 #include "Tetrahedron.h"
 #include "ImplicitSphere.h"
+#include "Material.h"
 
 //using Intersection = std::pair<Triangle, Vertex>;
 

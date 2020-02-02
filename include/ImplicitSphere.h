@@ -3,6 +3,7 @@
 
 #include "Utility.h"
 #include "Ray.h"
+#include "Material.h"
 #include <utility>
 
 class ImplicitSphere {
@@ -16,11 +17,14 @@ public:
 	bool rayIntersection(Ray &r);
 
 	bool stableQuadraticSolver(const float& a, const float& b, const float& c, float& x0, float& x1);
+
+	ColorDbl getColor() { return material.getColor(); }
 private:
 	float radius;
 	float radiusSquared;
 	Vertex center;
 	ColorDbl color;
+	Material material;
 };
 
 #endif // !IMPLICITSPHERE_H
