@@ -9,10 +9,10 @@
 class ImplicitSphere {
 public:
 	ImplicitSphere() 
-		: radius(1.0f), radiusSquared(1.0f), center(Vertex(0.0f)), color(ColorDbl(0,130,130)) {};
+		: radius(1.0f), radiusSquared(1.0f), center(Vertex(0.0f)), material(Material()) {};
 
-	ImplicitSphere(float radius, Vertex center, ColorDbl color) 
-		:radius(radius), center(center), color(color)  { radiusSquared = radius * radius; };
+	ImplicitSphere(float radius, Vertex center, Material material) 
+		:radius(radius), center(center), material(material)  { radiusSquared = radius * radius; };
 
 	bool rayIntersection(Ray &r);
 
@@ -23,7 +23,6 @@ private:
 	float radius;
 	float radiusSquared;
 	Vertex center;
-	ColorDbl color;
 	Material material;
 };
 

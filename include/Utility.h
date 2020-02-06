@@ -13,17 +13,21 @@ struct Intersection {
 
 	Intersection() {
 		position = Vertex();
+		materialType = 1; // LAMBERTIAN by default
+		normal = Direction();
 		color = ColorDbl();
 		distanceToRayOrigin = NULL;
 		initialized = false;
 	}
 
-	Intersection(Vertex i, ColorDbl c, float dist)
-		: position(i), color(c), distanceToRayOrigin(dist) {
+	Intersection(Vertex i, ColorDbl c, float dist, int t, Direction n)
+		: position(i), color(c), distanceToRayOrigin(dist), materialType(t), normal(n) {
 		initialized = true;
 	}
 
 	Vertex position;
+	Direction normal;
+	int materialType;
 	ColorDbl color;
 	float distanceToRayOrigin;
 	bool initialized;

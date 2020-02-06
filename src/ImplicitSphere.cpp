@@ -23,7 +23,7 @@ bool ImplicitSphere::rayIntersection(Ray& r) {
 
 	if (!r.hasIntersection() || r.getIntersection().distanceToRayOrigin > d0) {
 		Vertex intersectionPoint = Vertex(r.getStart() + glm::vec4(d0 * r.getDirection(), 1.0f));
-		r.setIntersection(Intersection(intersectionPoint, color, d0));
+		r.setIntersection(Intersection(intersectionPoint, material.getColor(), d0, material.getType(), glm::normalize(glm::vec3(intersectionPoint - center))));
 	}
 
 	return true;

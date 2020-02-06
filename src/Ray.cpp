@@ -27,5 +27,5 @@ void Ray::setColor(ColorDbl c) {
 }
 
 void Ray::setIntersection(Intersection i) {
-	intersection = Intersection(i.position, i.color, i.distanceToRayOrigin);
+	intersection = Intersection(i.position, i.color, i.distanceToRayOrigin, i.materialType, i.normal);
 }

@@ -12,17 +12,19 @@ public:
 
 	ColorDbl trace(Ray& ray);
 
+	Ray diffuseReflection(Ray &in);
+	Ray perfectReflection(Ray& in);
+
 private:
 
 	struct Node {
 		Node(Node* parentIn, Ray rayIn, Scene* scene) 
-			: parent(parentIn), reflected(nullptr), refracted(nullptr), ray(rayIn) {
+			: parent(parentIn), reflected(nullptr), ray(rayIn) {
 			scene->detectIntersection(ray);
 		}
 
 		Node* parent;
 		Node* reflected;
-		Node* refracted;
 		Ray ray;
 		float reflectionCoefficient = 1.0f;
 	};

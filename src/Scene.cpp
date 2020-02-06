@@ -1,5 +1,18 @@
 #include "Scene.h"
 
+
+const ColorDbl Yellow = ColorDbl(255, 211, 0);
+const ColorDbl Red = ColorDbl(240, 0, 0);
+const ColorDbl Green = ColorDbl(0, 240, 0);
+const ColorDbl Blue = ColorDbl(0, 0, 240);
+const ColorDbl White = ColorDbl(255, 255, 255);
+
+const Material YellowMaterial = Material(Yellow, PERFECT_REFLECTOR, glm::vec3(1.0f), 1.0f);
+const Material RedMaterial = Material(Red, LAMBERTIAN, glm::vec3(0.f), 1.0f);
+const Material GreenMaterial = Material(Green, LAMBERTIAN, glm::vec3(0.f), 1.0f);
+const Material BlueMaterial = Material(Blue, LAMBERTIAN, glm::vec3(0.f), 1.0f);
+const Material WhiteMaterial = Material(White, LAMBERTIAN, glm::vec3(0.f), 1.0f);
+
 Scene::Scene() {
 	//createRoom();
 }
@@ -61,46 +74,43 @@ void Scene::createRoom() {
 	//           | 
 	//       <---|  y-direction
 	//		z-direction UPWARDS
-	const ColorDbl Red = ColorDbl(240, 0, 0);
-	const ColorDbl Green = ColorDbl(0, 240, 0);
-	const ColorDbl Blue = ColorDbl(0, 0, 240);
-	const ColorDbl White = ColorDbl(255, 255, 255);
+
 
 	//Floor (normals point up)
-	triangles.push_back(Triangle(vertices.at(3), vertices.at(7), vertices.at(5), White));
-	triangles.push_back(Triangle(vertices.at(3), vertices.at(1), vertices.at(7), White));
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(9), vertices.at(7), White));
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(11), vertices.at(9), White));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(7), vertices.at(5), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(1), vertices.at(7), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(9), vertices.at(7), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(11), vertices.at(9), WhiteMaterial));
 
 	//Roof (normals point down)
-	triangles.push_back(Triangle(vertices.at(2), vertices.at(4), vertices.at(6), White));
-	triangles.push_back(Triangle(vertices.at(2), vertices.at(6), vertices.at(0), White));
-	triangles.push_back(Triangle(vertices.at(0), vertices.at(6), vertices.at(8), White));
-	triangles.push_back(Triangle(vertices.at(0), vertices.at(8), vertices.at(10), White));
+	triangles.push_back(Triangle(vertices.at(2), vertices.at(4), vertices.at(6), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(2), vertices.at(6), vertices.at(0), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(0), vertices.at(6), vertices.at(8), WhiteMaterial));
+	triangles.push_back(Triangle(vertices.at(0), vertices.at(8), vertices.at(10), WhiteMaterial));
 
 	//Left middle (normals point right)
-	triangles.push_back(Triangle(vertices.at(3), vertices.at(2), vertices.at(0), Green));
-	triangles.push_back(Triangle(vertices.at(3), vertices.at(0), vertices.at(1), Green));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(2), vertices.at(0), GreenMaterial));
+	triangles.push_back(Triangle(vertices.at(3), vertices.at(0), vertices.at(1), GreenMaterial));
 
 	//Left front (normals point right)
-	triangles.push_back(Triangle(vertices.at(5), vertices.at(4), vertices.at(2), Green));
-	triangles.push_back(Triangle(vertices.at(5), vertices.at(2), vertices.at(3), Green));
+	triangles.push_back(Triangle(vertices.at(5), vertices.at(4), vertices.at(2), GreenMaterial));
+	triangles.push_back(Triangle(vertices.at(5), vertices.at(2), vertices.at(3), GreenMaterial));
 
 	//Left back (normals point right)
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(0), vertices.at(10), Green));
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(10), vertices.at(11), Green));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(0), vertices.at(10), GreenMaterial));
+	triangles.push_back(Triangle(vertices.at(1), vertices.at(10), vertices.at(11), GreenMaterial));
 
 	//Right middle (normals pointing left)
-	triangles.push_back(Triangle(vertices.at(9), vertices.at(8), vertices.at(6), Blue));
-	triangles.push_back(Triangle(vertices.at(9), vertices.at(6), vertices.at(7), Blue));
+	triangles.push_back(Triangle(vertices.at(9), vertices.at(8), vertices.at(6), BlueMaterial));
+	triangles.push_back(Triangle(vertices.at(9), vertices.at(6), vertices.at(7), BlueMaterial));
 
 	//Right front (normals pointing left)
-	triangles.push_back(Triangle(vertices.at(7), vertices.at(6), vertices.at(4), Blue));
-	triangles.push_back(Triangle(vertices.at(7), vertices.at(4), vertices.at(5), Blue));
+	triangles.push_back(Triangle(vertices.at(7), vertices.at(6), vertices.at(4), BlueMaterial));
+	triangles.push_back(Triangle(vertices.at(7), vertices.at(4), vertices.at(5), BlueMaterial));
 
 	//Right back (normals pointing left)
-	triangles.push_back(Triangle(vertices.at(11), vertices.at(10), vertices.at(8), Red));
-	triangles.push_back(Triangle(vertices.at(11), vertices.at(8), vertices.at(9), Red));
+	triangles.push_back(Triangle(vertices.at(11), vertices.at(10), vertices.at(8), RedMaterial));
+	triangles.push_back(Triangle(vertices.at(11), vertices.at(8), vertices.at(9), RedMaterial));
 
 	/*
 	Vertex aTop(-3.0f, 0.0f, 5.0f, 1.0), aBottom(-3.0f, 0.0f, -5.0f, 1.0);
@@ -121,7 +131,7 @@ void Scene::addTetrahedron() {
 }
 
 void Scene::addImplicitSphere() {
-	ImplicitSphere sphere = ImplicitSphere(1.0f, Vertex(5.f, -3.f, 2.f, 0.0f), ColorDbl(255,211,0));
+	ImplicitSphere sphere = ImplicitSphere(1.0f, Vertex(5.f, -3.f, 2.f, 0.0f), YellowMaterial);
 	spheres.push_back(sphere);
 }
 
@@ -136,8 +146,8 @@ void Scene::createTestRoom() {
 
 	ColorDbl Yellow = ColorDbl(255, 211, 0);
 
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(2), vertices.at(1), Yellow));
-	triangles.push_back(Triangle(vertices.at(1), vertices.at(3), vertices.at(2), Yellow));
+	//triangles.push_back(Triangle(vertices.at(1), vertices.at(2), vertices.at(1), Yellow));
+	//triangles.push_back(Triangle(vertices.at(1), vertices.at(3), vertices.at(2), Yellow));
 
 
 }

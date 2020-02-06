@@ -21,7 +21,7 @@ bool Triangle::rayIntersection(Ray& r) {
 		//r.setObjectNormal(normal);
 		//r.setIntersection(v0 + glm::vec4( edge0()*(float)u + edge1()*(float)v + normal * 0.01f, 1.0f));
 		if (!r.hasIntersection() || r.getIntersection().distanceToRayOrigin > t) {
-			r.setIntersection(Intersection(r.getStart() + glm::vec4((float)t * r.getDirection(), 1.0), color, t));
+			r.setIntersection(Intersection(r.getStart() + glm::vec4((float)t * r.getDirection(), 1.0), material.getColor(), t, material.getType(), normal));
 			return INTERSECTION;
 		}
 	}
