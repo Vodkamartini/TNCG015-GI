@@ -1,0 +1,83 @@
+#include "Camera.h"
+#include <fstream>
+
+void Camera::switchEye() {
+	if (_using_eye1)
+		_using_eye1 = false;
+	else
+		_using_eye1 = true;
+}
+
+void Camera::render(Scene* scene) {
+	printf("\nRendering scene...\n");
+	int count = 0, total = _pixels.size();
+
+	ColorDbl finalColor(0.0, 0.0, 0.0);
+	Pixel thisPixel;
+
+	float pixelSizeY = 2 / (float)_pixels.width();
+	float pixelSizeZ = 2 / (float)_pixels.height();
+
+	Vertex activeEye = _using_eye1 ? _eye1 : _eye2;
+
+	float x = 0.0f, y = -0.99875f, z = -0.99875f;
+	for (int i = 0; i < _pixels.height(); i++) {
+		z = -0.99875f;
+		for (int j = 0; j < _pixels.width(); j++) {
+
+			finalColor = ColorDbl(0.0, 0.0, 0.0);
+			Ray thisRay(activeEye, Vertex(x, y, z, 1.0f));
+
+			if(scene->detectIntersection(thisRay))
+				finalColor = thisRay.getColor();
+			else 
+				printf("\nERROR::Camera in function 'render': No ray intersections found.\n");
+			
+			thisPixel._color = finalColor;
+			_pixels.set(thisPixel, i, j);
+
+			z += pixelSizeZ;
+		}
+
+		y += pixelSizeY;
+	}
+	printf("\nDone!\n");
+	createImage();
+}
+
+void Camera::createImage() {
+	printf("\nWriting image to file...\n");
+	double max = findMaxIntensity();
+	if (max == 0)
+		max = EPSILON;
+
+	std::ofstream output("RenderImage.ppm");
+	output << "P3\n" << _pixels.width() << " " << _pixels.height() << "\n255\n";
+	for (int j = _pixels.height() - 1; j >= 0; j--) {
+		for (int i = _pixels.width() - 1; i >= 0; i--) {
+			
+			float r = _pixels.get(i, j)->_color.r * 255.99 / max;
+			float g = _pixels.get(i, j)->_color.g * 255.99 / max;
+			float b = _pixels.get(i, j)->_color.b * 255.99 / max;
+
+			output << r << " " << g << " " << b << "\n";
+		}
+	}
+	printf("\nDone!\n");
+}
+
+double Camera::findMaxIntensity() {
+	double max = EPSILON;
+	for (int i = 0; i < _pixels.height(); i++) {
+		for (int j = 0; j < _pixels.width(); j++) {
+
+			if (_pixels.get(i, j)->_color.r > max)
+				max = _pixels.get(i, j)->_color.r;
+			if (_pixels.get(i, j)->_color.g > max)
+				max = _pixels.get(i, j)->_color.g;
+			if (_pixels.get(i, j)->_color.b > max)
+				max = _pixels.get(i, j)->_color.b;
+		}
+	}
+	return max;
+}

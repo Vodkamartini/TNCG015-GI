@@ -1,0 +1,4 @@
+﻿  Implicit.cpp
+D:\Filer\Visual Studio 2019\Projects\Global_Illumination\Global_Illumination\Implicit.cpp(13,45): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Filer\Visual Studio 2019\Projects\Global_Illumination\Global_Illumination\Implicit.cpp(15,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Global_Illumination.vcxproj -> D:\Filer\Visual Studio 2019\Projects\Global_Illumination\Debug\Global_Illumination.exe
