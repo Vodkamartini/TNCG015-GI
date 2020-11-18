@@ -32,7 +32,7 @@ int main() {
 
 	scene.addPolygonial(tetrahedron);
 	scene.addImplicit(sphere);
-	scene.addLightsource(LightSource());	// Add default lightsource to scene
+	//scene.addLightsource(LightSource());	// Add default lightsource to scene
 	cam.switchEye();
 	cam.render(&scene);
 }

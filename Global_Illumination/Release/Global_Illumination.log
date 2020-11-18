@@ -1,7 +1,30 @@
-﻿  main.cpp
+﻿  Camera.cpp
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(24,20): warning C4018: '<': signed/unsigned mismatch
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(26,21): warning C4018: '<': signed/unsigned mismatch
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(59,12): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(60,12): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(61,12): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Camera.cpp(72,21): warning C4018: '<': signed/unsigned mismatch
+  LightSource.cpp
+  main.cpp
+  Scene.cpp
   Generating code
-  84 of 650 functions (12.9%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    40 functions had inline decision re-evaluated but remain unchanged
+D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Global_Illumination\Sphere.cpp(38): warning C4715: 'Sphere::rayIntersection': not all control paths return a value
+  603 of 618 functions (97.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Global_Illumination.vcxproj -> D:\Filer\Visual Studio 2019\Projects\Global_Illumination\Release\Global_Illumination.exe
+  Global_Illumination.vcxproj -> D:\Filer\Visual Studio 2019\Projects\TNCG015-GI\Release\Global_Illumination.exe
