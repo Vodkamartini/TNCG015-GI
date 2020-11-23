@@ -10,7 +10,7 @@
 class Camera
 {
 public:
-	Camera(const Vertex eye1, const Vertex eye2,  size_t width,  size_t height) : _eye1(eye1), _eye2(eye2) {
+	Camera(const Vertex eye1, const Vertex eye2,  std::size_t width,  std::size_t height) : _eye1(eye1), _eye2(eye2) {
 		_pixels = Array2D<Pixel>(width, height);
 	};
 

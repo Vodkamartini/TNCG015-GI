@@ -24,6 +24,25 @@ int main() {
 	// Sphere
 	Sphere sphere(Vertex(5.0f, -3.0f, 2.0f, 1.0f), 1.0f, ColorDbl(255, 211, 0), 2, Vertex(5.0f, -3.0f, 2.0f, 1.0f));
 
+
+	//LightSource
+	//    Seen from below light:
+	//    a-----b           ^ x
+	//    | \   |           |
+	//    |   \ |           ----> y
+	//    c-----d
+
+	Vertex a(0.5f, -0.5f, 0.0f, 1.0f);
+	Vertex b(0.5f, 0.5f, 0.0f, 1.0f);
+	Vertex c(-0.5f, -0.5f, 0.0f, 1.0f);
+	Vertex d(-0.5f, 0.5f, 0.0f, 1.0f);
+
+	Triangle lightTri1(a, c, d, ColorDbl(255.f, 0.f, 255.f));
+	Triangle lightTri2(a, d, b, ColorDbl(255.f, 0.f, 255.f));
+	
+	std::vector<Triangle> lightTriangles = { lightTri1, lightTri2 };
+	LightSource light(lightTriangles, 2, Vertex(5.0f, 0.0f, 4.99f, 1.0f));
+
 	Vertex eye1(-2.0f, 0.0f, 0.0f, 1.0f);
 	Vertex eye2(-1.0f, 0.0f, 0.0f, 1.0f);
 
@@ -32,6 +51,7 @@ int main() {
 
 	scene.addPolygonial(tetrahedron);
 	scene.addImplicit(sphere);
+	scene.addLightsource(light);
 	//scene.addLightsource(LightSource());	// Add default lightsource to scene
 	cam.switchEye();
 	cam.render(&scene);

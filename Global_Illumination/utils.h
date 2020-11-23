@@ -5,8 +5,8 @@
 
 const float EPSILON = 0.000000001f;
 const float M_PI = 3.14159265358979323846f;
-const size_t DEFAULT_WIDTH = 800;
-const size_t DEFAULT_HEIGHT = 800;
+const std::size_t DEFAULT_WIDTH = 800;
+const std::size_t DEFAULT_HEIGHT = 800;
 
 enum material {
 	LAMBERTIAN,
@@ -28,19 +28,19 @@ public:
 		_data.resize(_width * _height);
 	}
 
-	Array2D(const size_t width, const size_t height) : _width(width), _height(height) {
+	Array2D(const std::size_t width, const std::size_t height) : _width(width), _height(height) {
 		_data.resize(_width * _height);
 	};
 
-	T* get(size_t x, size_t y) { return &(_data[getPosition(x, y)]); };
-	void set(T value, size_t x, size_t y) { _data[getPosition(x, y)] = value; };
-	const size_t size() const { return _width * _height; };
-	const size_t width() const { return _width; };
-	const size_t height() const { return _height; };
+	T* get(std::size_t x, std::size_t y) { return &(_data[getPosition(x, y)]); };
+	void set(T value, std::size_t x, std::size_t y) { _data[getPosition(x, y)] = value; };
+	const std::size_t size() const { return _width * _height; };
+	const std::size_t width() const { return _width; };
+	const std::size_t height() const { return _height; };
 
 private:
-	size_t getPosition(size_t x, size_t y) { return x + (_width * y); };
+	std::size_t getPosition(std::size_t x, std::size_t y) { return x + (_width * y); };
 
-	size_t _width, _height;
+	std::size_t _width, _height;
 	std::vector<T> _data;
 };

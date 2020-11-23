@@ -6,18 +6,15 @@
 class LightSource : public Polygonial
 {
 public:
-	//LightSource()
-	//{
-	//	Vertex v0(-1.0f, 4.99f, 8.0f, 1.0f);
-	//	Vertex v1(1.0f, 4.99f, 8.0f, 1.0f);
-	//	Vertex v2(-1.0f, 4.99f, 6.0f, 1.0f);
-	//	Vertex v3(1.0f, 4.99f, 6.0f, 1.0f);
+	LightSource(std::vector<Triangle> triangles, int material, Vertex position)
+		: Polygonial(triangles, material, position){};
 
-	//	_triangles = { (Triangle(v0, v3, v1, ColorDbl(255, 0, 255))), (Triangle(v0, v2, v3, ColorDbl(255, 0, 255))) };
-	//	Polygonial(std::vector<Triangle>(), 2, Vertex(0.0f));
-	//}
+	float GetEmission() const { return emission; }
+
+private: 
+	float emission = 400.0f;
 };
-#endif // !LIGHTSOURCE_H
+#endif // LIGHTSOURCE_H
 
 
 
