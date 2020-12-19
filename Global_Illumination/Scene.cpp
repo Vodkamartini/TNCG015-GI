@@ -10,13 +10,13 @@ bool Scene::detectIntersection(Ray& ray) {
 	for (Triangle triangle : _triangles) {
 		triangle.rayIntersection(ray);
 	}
-	
-	for (Polygonial object : _polys) {
-		object.rayIntersection(ray);
+
+	for (Tetrahedron tetrahedron : _tetrahedrons) {
+		tetrahedron.rayIntersection(ray);
 	}
 
-	for (Sphere object : _implicits) {
-		object.rayIntersection(ray);
+	for (Sphere sphere : _spheres) {
+		sphere.rayIntersection(ray);
 	}
 
 	for (LightSource object : _lightSources) {
@@ -29,15 +29,15 @@ bool Scene::detectIntersection(Ray& ray) {
 		return false;
 }
 
-void Scene::addPolygonial(Polygonial object) {
-	_polys.push_back(object);
+void Scene::addTetrahedron(Tetrahedron& tetrahedron) {
+	_tetrahedrons.push_back(tetrahedron);
 }
 
-void Scene::addImplicit(Sphere object) {
-	_implicits.push_back(object);
+void Scene::addSphere(Sphere& sphere) {
+	_spheres.push_back(sphere);
 }
 
-void Scene::addLightsource(LightSource object) {
+void Scene::addLightsource(LightSource& object) {
 	_lightSources.push_back(object);
 }
 

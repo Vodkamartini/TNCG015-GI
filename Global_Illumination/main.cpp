@@ -49,10 +49,11 @@ int main() {
 	Camera cam(eye1, eye2, 800, 800);
 	Scene scene;
 
-	scene.addPolygonial(tetrahedron);
-	scene.addImplicit(sphere);
+	scene.addTetrahedron(tetrahedron);
+	scene.addSphere(sphere);
+
 	scene.addLightsource(light);
-	//scene.addLightsource(LightSource());	// Add default lightsource to scene
+
 	cam.switchEye();
 	cam.render(&scene);
 }

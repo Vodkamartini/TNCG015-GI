@@ -2,7 +2,7 @@
 
 Triangle::Triangle(std::vector<Vertex> vertices, Direction normal, ColorDbl color) : _normal(normal), _color(color) {
 	if (vertices.size() != 3)
-		printf("\nERROR::Triangle in constructor: Bad vector size: %i\n", vertices.size());
+		printf("\nERROR::Triangle in constructor: Bad vector size: %zi\n", vertices.size());
 	else {
 		for (unsigned int i = 0; i < vertices.size(); i++) {
 			_vertices.push_back(vertices[i]);
