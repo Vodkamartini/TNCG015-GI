@@ -25,8 +25,11 @@ public:
 	Vertex getVertex(unsigned int index) const;
 	Direction getNormal() const { return _normal; };
 	ColorDbl getColor() const { return _color; };
-
+	const double getArea() const;
 	void updateVertexPosition(unsigned int index, Vertex newPosition);
+	
+	Vertex getRandomPoint() const;
+	glm::vec3 fromBarycentric(float a, float b) const;
 
 	void Print() const;
 private:

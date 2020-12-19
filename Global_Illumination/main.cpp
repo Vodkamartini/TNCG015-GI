@@ -37,11 +37,11 @@ int main() {
 	Vertex c(-0.5f, -0.5f, 0.0f, 1.0f);
 	Vertex d(-0.5f, 0.5f, 0.0f, 1.0f);
 
-	Triangle lightTri1(a, c, d, ColorDbl(255.f, 0.f, 255.f));
-	Triangle lightTri2(a, d, b, ColorDbl(255.f, 0.f, 255.f));
+	Triangle lightTri1(a, c, d, ColorDbl(255.0));
+	Triangle lightTri2(a, d, b, ColorDbl(255.0));
 	
 	std::vector<Triangle> lightTriangles = { lightTri1, lightTri2 };
-	LightSource light(lightTriangles, 2, Vertex(5.0f, 0.0f, 4.99f, 1.0f));
+	LightSource light(lightTriangles, 2, Vertex(5.0f, 0.0f, 4.99f, 1.0f), 20.0);
 
 	Vertex eye1(-2.0f, 0.0f, 0.0f, 1.0f);
 	Vertex eye2(-1.0f, 0.0f, 0.0f, 1.0f);

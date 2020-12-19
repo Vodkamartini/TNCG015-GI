@@ -21,7 +21,9 @@ public:
 	double getClosestIntersection() const { return _intersection._distance; };
 	bool hasIntersection() const { return _intersection._hasIntersection; };
 
-	void updateIntersection(double distance, Vertex position, ColorDbl color);
+	void updateIntersection(double distance, Vertex position, ColorDbl color, Direction normal);
+	const Vertex& getIntersectionPoint() const { return _intersection._position; };
+	const Direction& getIntersectionNormal() const { return _intersection._normal; };
 
 	void Print() const;
 	void PrintIntersection() const;
@@ -33,6 +35,7 @@ private:
 	struct Intersection {
 		//Triangle* _intersectedTriangle;
 		ColorDbl _color;
+		Direction _normal;
 		double _distance = 10000.0;
 		Vertex _position = Vertex(10000.0, 10000.0, 10000.0, 10000.0);
 		bool _hasIntersection = false;

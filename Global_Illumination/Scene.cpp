@@ -5,7 +5,8 @@ Scene::Scene() {
 	createRoom();
 }
 
-bool Scene::detectIntersection(Ray& ray) {
+// Loop over all objects in the scene and detect ray intersections
+bool Scene::castRay(Ray& ray) {
 	
 	for (Triangle triangle : _triangles) {
 		triangle.rayIntersection(ray);
@@ -19,14 +20,54 @@ bool Scene::detectIntersection(Ray& ray) {
 		sphere.rayIntersection(ray);
 	}
 
-	for (LightSource object : _lightSources) {
-		object.rayIntersection(ray);
+	for (LightSource light : _lightSources) {
+		light.rayIntersection(ray);
 	}
 
 	if (ray.hasIntersection())
 		return true;
 	else
 		return false;
+}
+
+ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
+	ColorDbl lightContribution(0.0);
+	
+	int lightCount = 0;
+	double lightArea = 0.0;
+
+	for(LightSource light : _lightSources) {
+		for (Triangle lightTriangle : light.getTriangles()) {
+			lightArea += lightTriangle.getArea();	
+			for (int i = 0; i < SHADOW_RAY_COUNT; i++) {
+				++lightCount;
+
+				Vertex lightPoint = lightTriangle.getRandomPoint();
+
+				// Create a shadow ray towards our light source
+				Ray shadowRay(origin, glm::normalize(lightPoint - origin));
+
+				// Detect all intersections towards light source
+				// If closest intersection is closer than light, point is occluded
+				this->castRay(shadowRay);
+				if(!shadowRay.hasIntersection() || shadowRay.getClosestIntersection() < glm::distance(origin, lightPoint))
+				{
+					// Not visible, so no light contribution
+					continue;
+				}
+
+				Direction shadowRayDirection = glm::normalize(shadowRay.getEnd() - shadowRay.getStart());
+				double alpha = glm::dot(normal, shadowRayDirection);	
+				double beta = glm::clamp((double)glm::dot(lightTriangle.getNormal(), -shadowRayDirection), 0.0, 1.0);
+
+				double geometric = alpha * beta / pow(glm::distance(origin, lightPoint), 2.0);
+				lightContribution += lightTriangle.getColor() * light.getEmission() * geometric;
+				
+			}
+		}
+	}
+
+	return lightContribution * lightArea / (double)lightCount;
 }
 
 void Scene::addTetrahedron(Tetrahedron& tetrahedron) {

@@ -7,7 +7,7 @@ Triangle::Triangle(std::vector<Vertex> vertices, Direction normal, ColorDbl colo
 		for (unsigned int i = 0; i < vertices.size(); i++) {
 			_vertices.push_back(vertices[i]);
 		}
-
+		
 		assert(_vertices.size() == 3);
 	}
 }
@@ -20,7 +20,7 @@ Triangle::Triangle(Vertex v1, Vertex v2, Vertex v3, ColorDbl color) : _color(col
 	glm::vec3 edge1(_vertices[1] - _vertices[0]);
 	glm::vec3 edge2(_vertices[2] - _vertices[0]);
 
-	_normal = glm::cross(edge1, edge2);
+	_normal = glm::normalize(glm::cross(edge1, edge2));
 }
 
 Triangle::Triangle(Vertex v1, Vertex v2, Vertex v3, Direction normal, ColorDbl color) : _normal(normal), _color(color) {
@@ -59,7 +59,7 @@ bool Triangle::rayIntersection(Ray& ray) {
 	if (t > dist) return NOT_INTERSECTION;
 
 	if (t > EPSILON) {
-		ray.updateIntersection(t, ray.getStart() + Vertex(rayDirection, 1.0f) * (float)t, this->getColor());
+		ray.updateIntersection(t, ray.getStart() + Vertex(rayDirection, 1.0f) * (float)t, this->getColor(), getNormal());
 		return INTERSECTION;
 	}
 	else {
@@ -90,4 +90,23 @@ void Triangle::Print() const {
 	}
 	printf("\nTriangle normal: (%f, %f, %f)", _normal.x, _normal.y, _normal.z);
 	printf("\nTriangle color: (%f, %f, %f)\n", (float)_color.r, (float)_color.g, (float)_color.b);
+}
+
+const double Triangle::getArea() const {
+	return 0.5 * (double)glm::length(glm::cross(glm::vec3(_vertices[1] - _vertices[0]), glm::vec3(_vertices[2] - _vertices[0])));
+}
+
+Vertex Triangle::getRandomPoint() const {
+	double triangleArea = getArea();
+	double a = randMinMax(0.0, 1.0 / triangleArea), b = randMinMax(0.0, 1.0 / triangleArea);
+	if (a + b > 1.0) {
+		return getRandomPoint();
+	}
+
+	return Vertex(fromBarycentric((float)a, (float)b), 1.0f);
+}
+
+glm::vec3 Triangle::fromBarycentric(float a, float b) const{
+	glm::vec3 pos = (1.0f - a - b) * _vertices[0] + a * _vertices[1] + b * _vertices[2];
+	return pos + 0.001f * glm::vec3(0.0f, 0.0f, -1.0f);
 }

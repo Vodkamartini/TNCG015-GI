@@ -143,23 +143,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Implicit.cpp" />
     <ClCompile Include="LightSource.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Polygonial.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Implicit.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Polygonial.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sphere.h" />

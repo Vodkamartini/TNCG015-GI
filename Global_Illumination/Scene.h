@@ -13,7 +13,8 @@ class Scene
 public:
 	Scene();
 
-	bool detectIntersection(Ray& ray);
+	bool castRay(Ray& ray);
+	ColorDbl castShadowRay(const Vertex& origin, const Direction& normal);
 	void addTetrahedron(Tetrahedron& tetrahedron);
 	void addSphere(Sphere& sphere);
 	void addLightsource(LightSource& object);

@@ -1,12 +1,22 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <random>
 #include <glm/glm.hpp>
+
+static std::default_random_engine GENERATOR;
+static std::uniform_real_distribution<double> DISTR(0.0, 1.0);
 
 const float EPSILON = 0.000000001f;
 const float M_PI = 3.14159265358979323846f;
+const std::size_t SHADOW_RAY_COUNT = 2;
 const std::size_t DEFAULT_WIDTH = 800;
 const std::size_t DEFAULT_HEIGHT = 800;
+
+
+double uniformRand();
+double randMinMax(const double& min, const double& man);
+
 
 enum material {
 	LAMBERTIAN,

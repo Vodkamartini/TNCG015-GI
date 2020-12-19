@@ -18,10 +18,11 @@ Ray::Ray(Vertex start, Vertex end) {
 }
 
 // Update intersection data and set ray color to match triangle color
-void Ray::updateIntersection(double distance, Vertex position, ColorDbl color) {
+void Ray::updateIntersection(double distance, Vertex position, ColorDbl color, Direction normal) {
 	//_intersection._intersectedTriangle = triangle;
 	_intersection._color = color;
 	_intersection._distance = distance;
+	_intersection._normal = normal;
 	_intersection._position = position;
 	_intersection._hasIntersection = true;
 }

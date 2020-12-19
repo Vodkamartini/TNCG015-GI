@@ -2,17 +2,22 @@
 #define LIGHTSOURCE_H
 #pragma once
 
-#include "Polygonial.h"
-class LightSource : public Polygonial
+#include "Object.h"
+#include "Triangle.h"
+class LightSource : public Object
 {
 public:
-	LightSource(std::vector<Triangle> triangles, int material, Vertex position)
-		: Polygonial(triangles, material, position){};
-
-	float GetEmission() const { return emission; }
+	LightSource(std::vector<Triangle> triangles, int material, Vertex position, double emission);
+		
+	const double getEmission() const { return _emission; }
+	const std::vector<Triangle> getTriangles() { return _triangles; };
+	bool rayIntersection(Ray& ray) override;
 
 private: 
-	float emission = 400.0f;
+	void positionTriangles(std::vector<Triangle>& triangles);
+
+	double _emission;
+	std::vector<Triangle> _triangles;
 };
 #endif // LIGHTSOURCE_H
 

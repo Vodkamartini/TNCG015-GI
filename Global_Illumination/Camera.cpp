@@ -28,8 +28,14 @@ void Camera::render(Scene* scene) {
 			finalColor = ColorDbl(0.0, 0.0, 0.0);
 			Ray thisRay(activeEye, Vertex(x, y, z, 1.0f));
 
-			if(scene->detectIntersection(thisRay))
+			if(scene->castRay(thisRay))
+			{
 				finalColor = thisRay.getColor();
+
+				ColorDbl lightContribution = scene->castShadowRay(thisRay.getIntersectionPoint(), thisRay.getIntersectionNormal());
+-				finalColor *= lightContribution;
+			}
+				
 			else 
 				printf("\nERROR::Camera in function 'render': No ray intersections found.\n");
 			
