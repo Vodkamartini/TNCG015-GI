@@ -51,7 +51,7 @@ void Camera::createImage() {
 	if (max == 0)
 		max = EPSILON;
 
-	std::ofstream output("RenderImage.ppm");
+	std::ofstream output("../Output/RenderImage.ppm");
 	output << "P3\n" << _pixels.width() << " " << _pixels.height() << "\n255\n";
 	for (int j = _pixels.height() - 1; j >= 0; j--) {
 		for (int i = _pixels.width() - 1; i >= 0; i--) {
