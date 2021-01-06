@@ -21,9 +21,10 @@ public:
 	double getClosestIntersection() const { return _intersection._distance; };
 	bool hasIntersection() const { return _intersection._hasIntersection; };
 
-	void updateIntersection(double distance, Vertex position, ColorDbl color, Direction normal);
+	void updateIntersection(double distance, Vertex position, ColorDbl color, Direction normal, int material);
 	const Vertex& getIntersectionPoint() const { return _intersection._position; };
 	const Direction& getIntersectionNormal() const { return _intersection._normal; };
+	const int getIntersectionMaterial() const { return _intersection._material; };
 
 	void Print() const;
 	void PrintIntersection() const;
@@ -39,6 +40,7 @@ private:
 		double _distance = 10000.0;
 		Vertex _position = Vertex(10000.0, 10000.0, 10000.0, 10000.0);
 		bool _hasIntersection = false;
+		int _material = -1;
 	};
 
 	Intersection _intersection;

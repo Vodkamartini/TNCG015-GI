@@ -26,8 +26,11 @@ public:
 	Direction getNormal() const { return _normal; };
 	ColorDbl getColor() const { return _color; };
 	const double getArea() const;
-	void updateVertexPosition(unsigned int index, Vertex newPosition);
+	const int getMaterial() const { return _material; };
 	
+	void updateVertexPosition(unsigned int index, Vertex newPosition);
+	void updateMaterial(int material) { _material = material; };
+
 	Vertex getRandomPoint() const;
 	glm::vec3 fromBarycentric(float a, float b) const;
 
@@ -37,6 +40,7 @@ private:
 	std::vector<Vertex> _vertices;
 	Direction _normal;
 	ColorDbl _color;
+	int _material;
 };
 
 #endif // !TRIANGLE_H

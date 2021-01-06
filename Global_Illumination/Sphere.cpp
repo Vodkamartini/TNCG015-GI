@@ -32,9 +32,12 @@ bool Sphere::rayIntersection(Ray& ray)	{
 
 	if (!ray.hasIntersection() || ray.getClosestIntersection() > d0) {
 		Vertex intersectionPoint = Vertex(ray.getStart() + glm::vec4(rayDirection * d0, 1.0f));
-		ray.updateIntersection(d0, intersectionPoint, this->getColor(), (Direction)glm::normalize(intersectionPoint - _center));
+		ray.updateIntersection(d0, intersectionPoint, this->getColor(), (Direction)glm::normalize(intersectionPoint - _center), _material);
 		return INTERSECTION;
 	}
+
+	// If we miss the final condition for intersection, there is no intersection...
+	return NOT_INTERSECTION;
 }
 
 // Analytic stable quadratic solver from: https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
@@ -43,11 +46,11 @@ bool Sphere::stableQuadraticSolver(const float& a, const float& b, const float& 
 	// Return false if there are no real solutions
 	float discriminant = b * b - 4 * a * c;
 	if (discriminant < 0) return false;
-	else if (discriminant == 0) x0 = x1 = -0.5 * b / a;
+	else if (discriminant == 0) x0 = x1 = -0.5f * b / a;
 	else {
 		float q = (b > 0) ?
-			-0.5 * (b + sqrt(discriminant)) :
-			-0.5 * (b - sqrt(discriminant));
+			-0.5f * (b + sqrt(discriminant)) :
+			-0.5f * (b - sqrt(discriminant));
 		x0 = q / a;
 		x1 = c / q;
 	}

@@ -10,7 +10,7 @@ void Camera::switchEye() {
 
 void Camera::render(Scene* scene) {
 	printf("\nRendering scene...\n");
-	int count = 0, total = _pixels.size();
+	size_t count = 0, total = _pixels.size();
 
 	ColorDbl finalColor(0.0, 0.0, 0.0);
 	Pixel thisPixel;
@@ -33,7 +33,7 @@ void Camera::render(Scene* scene) {
 				finalColor = thisRay.getColor();
 
 				ColorDbl lightContribution = scene->castShadowRay(thisRay.getIntersectionPoint(), thisRay.getIntersectionNormal());
--				finalColor *= lightContribution;
+				finalColor *= lightContribution;
 			}
 				
 			else 

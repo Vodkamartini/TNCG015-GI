@@ -59,7 +59,7 @@ bool Triangle::rayIntersection(Ray& ray) {
 	if (t > dist) return NOT_INTERSECTION;
 
 	if (t > EPSILON) {
-		ray.updateIntersection(t, ray.getStart() + Vertex(rayDirection, 1.0f) * (float)t, this->getColor(), getNormal());
+		ray.updateIntersection(t, ray.getStart() + Vertex(rayDirection, 1.0f) * (float)t, this->getColor(), getNormal(), _material);
 		return INTERSECTION;
 	}
 	else {

@@ -20,6 +20,7 @@ bool LightSource::rayIntersection(Ray& ray)  {
 void LightSource::positionTriangles(std::vector<Triangle>& triangles) {
 	for (int t = 0; t < triangles.size(); t++) {
 		Triangle tri = triangles[t];
+		tri.updateMaterial(_material);
 		for (int v = 0; v < tri.getVertices().size(); v++) {
 			tri.updateVertexPosition(v, _position);
 		}
