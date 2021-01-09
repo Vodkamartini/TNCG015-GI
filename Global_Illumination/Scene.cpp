@@ -36,6 +36,22 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 		return false;
 	}
 	else {
+
+		// If depth is -1, then this is a shadow ray ==> return
+		if (depth == -1) {
+			return true;
+		}
+
+		// Cast a shadow ray to calculate direct light contribution
+		ColorDbl lightContribution = this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
+		ray.updateIntersection(
+			ray.getClosestIntersection(),
+			ray.getIntersectionPoint(),
+			ray.getColor() * lightContribution,
+			ray.getIntersectionNormal(),
+			ray.getIntersectionMaterial()
+		);
+
 		switch (ray.getIntersectionMaterial()) {
 			case LAMBERTIAN:
 				break;
@@ -53,13 +69,14 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 					ray.updateIntersection(
 						ray.getClosestIntersection(),
 						ray.getIntersectionPoint(),
-						0.8 * reflectedRay.getColor(),
+						0.2 * ray.getColor() + 0.8 * reflectedRay.getColor(),
 						ray.getIntersectionNormal(),
 						ray.getIntersectionMaterial()
 					);
 				}
 				break;
 			case LIGHT_SOURCE:
+				// Light sources should not spawn any new rays
 				break;
 		}
 		return true;
@@ -86,7 +103,7 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 
 				// Create a shadow ray towards our light source
 				Ray shadowRay(origin + (Vertex(normal, 0.0) * 0.1f), lightPoint);
-				this->castRay(shadowRay, MAX_DEPTH + 1); // Use MAX_DEPTH + 1 since we don't want to trace this ray more than once
+				this->castRay(shadowRay,  -1); // Use MAX_DEPTH + 1 since we don't want to trace this ray more than once
 
 				// Does the shadow ray have a direct line of sight to the point on the light source?
 				if (shadowRay.hasIntersection() && shadowRay.getIntersectionMaterial() == LIGHT_SOURCE) {
@@ -201,10 +218,6 @@ void Scene::createRoom() {
 
 	// Set the material of all triangles making up the room to diffuse
 	for (size_t i = 0; i < _triangles.size(); i++) {
-
 		_triangles[i].updateMaterial(0);
-		if (i == 10 || i == 11) {
-			_triangles[i].updateMaterial(1);
-		}
 	}
 }

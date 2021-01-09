@@ -19,7 +19,7 @@ int main() {
 	Triangle t3(v1, v3, v2, RED);
 
 	std::vector<Triangle> tetrahedronTriangles = { t0, t1, t2, t3 };
-	Tetrahedron* tetrahedron = new Tetrahedron(tetrahedronTriangles, 0, Vertex(9.0f, 3.0f, -4.0f, 1.0f));
+	Tetrahedron* tetrahedron = new Tetrahedron(tetrahedronTriangles, 1, Vertex(9.0f, 3.0f, -4.0f, 1.0f));
 
 	// Sphere
 	Sphere* sphere = new Sphere(Vertex(5.0f, -3.0f, 1.0f, 1.0f), 1.0f, ColorDbl(255, 211, 0), 1, Vertex(5.0f, -3.0f, 1.0f, 1.0f));
@@ -51,10 +51,6 @@ int main() {
 
 	scene.addObject(tetrahedron);
 	scene.addObject(sphere);
-
-	//scene.addTetrahedron(tetrahedron);
-	//scene.addSphere(sphere);
-
 	scene.addLightsource(light);
 
 	cam.switchEye();

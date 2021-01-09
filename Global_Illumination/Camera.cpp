@@ -32,8 +32,8 @@ void Camera::render(Scene* scene) {
 			{
 				finalColor = thisRay.getColor();
 
-				ColorDbl lightContribution = scene->castShadowRay(thisRay.getIntersectionPoint(), thisRay.getIntersectionNormal());
-				finalColor *= lightContribution;
+				//ColorDbl lightContribution = scene->castShadowRay(thisRay.getIntersectionPoint(), thisRay.getIntersectionNormal());
+				//finalColor *= lightContribution;
 			}
 				
 			else 
