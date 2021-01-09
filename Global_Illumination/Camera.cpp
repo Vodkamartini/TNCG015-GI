@@ -28,7 +28,7 @@ void Camera::render(Scene* scene) {
 			finalColor = ColorDbl(0.0, 0.0, 0.0);
 			Ray thisRay(activeEye, Vertex(x, y, z, 1.0f));
 
-			if(scene->castRay(thisRay))
+			if(scene->castRay(thisRay, 0))
 			{
 				finalColor = thisRay.getColor();
 

@@ -15,12 +15,14 @@ public:
 	Ray(std::vector<Vertex> vertices);
 	Ray(Vertex start, Vertex end);
 
+	// Standard get-functions
 	Vertex getStart() const { return _vertices[0]; };
 	Vertex getEnd() const { return _vertices[1]; };
 	ColorDbl getColor() const { return hasIntersection() ? _intersection._color : ColorDbl(-1, -1, -1); };
 	double getClosestIntersection() const { return _intersection._distance; };
 	bool hasIntersection() const { return _intersection._hasIntersection; };
 
+	// Intersection functions
 	void updateIntersection(double distance, Vertex position, ColorDbl color, Direction normal, int material);
 	const Vertex& getIntersectionPoint() const { return _intersection._position; };
 	const Direction& getIntersectionNormal() const { return _intersection._normal; };

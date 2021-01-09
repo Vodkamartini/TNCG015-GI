@@ -4,19 +4,6 @@
 #include <random>
 #include <glm/glm.hpp>
 
-static std::default_random_engine GENERATOR;
-static std::uniform_real_distribution<double> DISTR(0.0, 1.0);
-
-const float EPSILON = 0.000000001f;
-const float M_PI = 3.14159265358979323846f;
-const std::size_t SHADOW_RAY_COUNT = 2;
-const std::size_t DEFAULT_WIDTH = 800;
-const std::size_t DEFAULT_HEIGHT = 800;
-
-
-double uniformRand();
-double randMinMax(const double& min, const double& man);
-
 
 enum material {
 	LAMBERTIAN,
@@ -27,6 +14,24 @@ enum material {
 typedef glm::vec4 Vertex;
 typedef glm::vec3 Direction;
 typedef glm::dvec3 ColorDbl;
+
+// Define constants
+const float EPSILON = 0.000000001f;
+const float M_PI = 3.14159265358979323846f;
+const std::size_t MAX_DEPTH = 5;
+const std::size_t SHADOW_RAY_COUNT = 2;
+const std::size_t DEFAULT_WIDTH = 800;
+const std::size_t DEFAULT_HEIGHT = 800;
+const ColorDbl RED(255.0, 0, 0);
+const ColorDbl GREEN(0, 255.0, 0);
+const ColorDbl BLUE(0, 0, 255.0);
+
+// Random stuff
+static std::default_random_engine GENERATOR;
+static std::uniform_real_distribution<double> DISTR(0.0, 1.0);
+
+double uniformRand();
+double randMinMax(const double& min, const double& man);
 
 inline float deg2rad(const float& deg) {
 	return deg * M_PI / 180;

@@ -13,7 +13,7 @@ public:
 	Scene();
 	~Scene();
 
-	bool castRay(Ray& ray);
+	bool castRay(Ray& ray, size_t depth);
 	ColorDbl castShadowRay(const Vertex& origin, const Direction& normal);
 
 	void addObject(Object* object);

@@ -14,32 +14,56 @@ Scene::~Scene()
 }
 
 // Loop over all objects in the scene and detect ray intersections
-bool Scene::castRay(Ray& ray) {
+bool Scene::castRay(Ray& ray, size_t depth) {
 	
+	// Trace room
 	for (Triangle triangle : _triangles) {
 		triangle.rayIntersection(ray);
 	}
 	
+	// Trace objects
 	for (Object* object : _objects) {
 		object->rayIntersection(ray);
 	}
 
-	//for (Tetrahedron tetrahedron : _tetrahedrons) {
-	//	tetrahedron.rayIntersection(ray);
-	//}
-
-	//for (Sphere sphere : _spheres) {
-	//	sphere.rayIntersection(ray);
-	//}
-
+	// Trace light sources
 	for (LightSource light : _lightSources) {
 		light.rayIntersection(ray);
 	}
 
-	if (ray.hasIntersection())
-		return true;
-	else
+	// Determine wether we hit something or not
+	if (!ray.hasIntersection()) {
 		return false;
+	}
+	else {
+		switch (ray.getIntersectionMaterial()) {
+			case LAMBERTIAN:
+				break;
+			case PERFECT_REFLECTOR:
+				if (depth < MAX_DEPTH) {
+					// Perfect reflectors should always reflect a new ray as long as we haven't exceeded ray-threshold
+					Direction inDirection = ray.getIntersectionPoint() - ray.getStart();
+					Direction outDirection = glm::reflect(inDirection, ray.getIntersectionNormal());
+
+					Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+
+					this->castRay(reflectedRay, depth + 1);
+
+					// Update ray color, should maybe be done in a cleaner fashion...
+					ray.updateIntersection(
+						ray.getClosestIntersection(),
+						ray.getIntersectionPoint(),
+						0.8 * reflectedRay.getColor(),
+						ray.getIntersectionNormal(),
+						ray.getIntersectionMaterial()
+					);
+				}
+				break;
+			case LIGHT_SOURCE:
+				break;
+		}
+		return true;
+	}
 }
 
 ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
@@ -62,7 +86,7 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 
 				// Create a shadow ray towards our light source
 				Ray shadowRay(origin + (Vertex(normal, 0.0) * 0.1f), lightPoint);
-				this->castRay(shadowRay);
+				this->castRay(shadowRay, MAX_DEPTH + 1); // Use MAX_DEPTH + 1 since we don't want to trace this ray more than once
 
 				// Does the shadow ray have a direct line of sight to the point on the light source?
 				if (shadowRay.hasIntersection() && shadowRay.getIntersectionMaterial() == LIGHT_SOURCE) {
@@ -177,6 +201,10 @@ void Scene::createRoom() {
 
 	// Set the material of all triangles making up the room to diffuse
 	for (size_t i = 0; i < _triangles.size(); i++) {
+
 		_triangles[i].updateMaterial(0);
+		if (i == 10 || i == 11) {
+			_triangles[i].updateMaterial(1);
+		}
 	}
 }

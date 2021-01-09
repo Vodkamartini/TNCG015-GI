@@ -31,7 +31,7 @@ bool Sphere::rayIntersection(Ray& ray)	{
 	}
 
 	if (!ray.hasIntersection() || ray.getClosestIntersection() > d0) {
-		Vertex intersectionPoint = Vertex(ray.getStart() + glm::vec4(rayDirection * d0, 1.0f));
+		Vertex intersectionPoint = Vertex(ray.getStart() + glm::vec4(rayDirection * d0, 0.0f));
 		ray.updateIntersection(d0, intersectionPoint, this->getColor(), (Direction)glm::normalize(intersectionPoint - _center), _material);
 		return INTERSECTION;
 	}
