@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+#include <glm/gtx/rotate_vector.hpp> 
+
 Scene::Scene() {
 	printf("Creating room");
 	createRoom();
@@ -41,44 +43,92 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 		if (depth == -1) {
 			return true;
 		}
+		// Else find out wether we should spawn a new ray or not
+		else {
+			// Cast a shadow ray to calculate direct light contribution
+			ColorDbl lightContribution = this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
+			ray.updateIntersection(
+				ray.getClosestIntersection(),
+				ray.getIntersectionPoint(),
+				ray.getColor() * lightContribution,
+				ray.getIntersectionNormal(),
+				ray.getIntersectionMaterial()
+			);
+			switch (ray.getIntersectionMaterial()) {
+				case LAMBERTIAN:
+				{
+					double  alpha = 0.5;
+					// Russian roulette
+					if (1 - alpha > randMinMax(0, 1)) {
 
-		// Cast a shadow ray to calculate direct light contribution
-		ColorDbl lightContribution = this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
-		ray.updateIntersection(
-			ray.getClosestIntersection(),
-			ray.getIntersectionPoint(),
-			ray.getColor() * lightContribution,
-			ray.getIntersectionNormal(),
-			ray.getIntersectionMaterial()
-		);
+						double xi = uniformRand();
+						double yj = uniformRand();
 
-		switch (ray.getIntersectionMaterial()) {
-			case LAMBERTIAN:
-				break;
-			case PERFECT_REFLECTOR:
-				if (depth < MAX_DEPTH) {
-					// Perfect reflectors should always reflect a new ray as long as we haven't exceeded ray-threshold
-					Direction inDirection = ray.getIntersectionPoint() - ray.getStart();
-					Direction outDirection = glm::reflect(inDirection, ray.getIntersectionNormal());
+						Direction inDirection = glm::normalize(ray.getEnd() - ray.getStart());
 
-					Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+						// v1 and v2 are two orthogonal vectors that lie in the surface hit plane
+						Direction v1 = glm::normalize(-inDirection - glm::dot(-inDirection, ray.getIntersectionNormal() * ray.getIntersectionNormal()));
+						Direction v2 = -glm::cross(v1, ray.getIntersectionNormal());
 
-					this->castRay(reflectedRay, depth + 1);
+						float altitude = 2.f * M_PI * xi;
+						float azimuth = asin(sqrt(yj));
 
-					// Update ray color, should maybe be done in a cleaner fashion...
-					ray.updateIntersection(
-						ray.getClosestIntersection(),
-						ray.getIntersectionPoint(),
-						0.2 * ray.getColor() + 0.8 * reflectedRay.getColor(),
-						ray.getIntersectionNormal(),
-						ray.getIntersectionMaterial()
-					);
+						Direction outDirection = glm::normalize(glm::rotate(ray.getIntersectionNormal(), azimuth, v2));
+						outDirection = glm::normalize(glm::rotate(outDirection, altitude, ray.getIntersectionNormal()));
+
+						Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+
+						// Update ray color, should maybe be done in a cleaner fashion...
+						ray.updateIntersection(
+							ray.getClosestIntersection(),
+							ray.getIntersectionPoint(),
+							ray.getColor() * (0.8 / M_PI),
+							ray.getIntersectionNormal(),
+							ray.getIntersectionMaterial()
+						);
+					}
+
+					break;
 				}
-				break;
-			case LIGHT_SOURCE:
-				// Light sources should not spawn any new rays
-				break;
+				case PERFECT_REFLECTOR:
+				{
+					if (depth < MAX_DEPTH) {
+						// Perfect reflectors should always reflect a new ray as long as we haven't exceeded ray-threshold
+						Direction inDirection = ray.getIntersectionPoint() - ray.getStart();
+						Direction outDirection = glm::reflect(inDirection, ray.getIntersectionNormal());
+
+						Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+
+						this->castRay(reflectedRay, depth + 1);
+
+						// Update ray color, should maybe be done in a cleaner fashion...
+						ray.updateIntersection(
+							ray.getClosestIntersection(),
+							ray.getIntersectionPoint(),
+							0.2 * lightContribution + 0.8 * reflectedRay.getColor(),
+							ray.getIntersectionNormal(),
+							ray.getIntersectionMaterial()
+						);
+					}
+					else {
+						ray.updateIntersection(
+							ray.getClosestIntersection(),
+							ray.getIntersectionPoint(),
+							lightContribution,
+							ray.getIntersectionNormal(),
+							ray.getIntersectionMaterial()
+						);
+					}
+					break;
+				}
+				case LIGHT_SOURCE:
+				{
+					// Light sources should not spawn any new rays
+					break;
+				}
+			}
 		}
+
 		return true;
 	}
 }
@@ -103,7 +153,7 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 
 				// Create a shadow ray towards our light source
 				Ray shadowRay(origin + (Vertex(normal, 0.0) * 0.1f), lightPoint);
-				this->castRay(shadowRay,  -1); // Use MAX_DEPTH + 1 since we don't want to trace this ray more than once
+				this->castRay(shadowRay,  -1); // Depth -1 is reserved for shadow rays to avoid spawning new rays
 
 				// Does the shadow ray have a direct line of sight to the point on the light source?
 				if (shadowRay.hasIntersection() && shadowRay.getIntersectionMaterial() == LIGHT_SOURCE) {
@@ -116,25 +166,10 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 
 					lightContribution += shadowRay.getColor() * dt;
 				}
-
-				// Old code that does not work...
-				//if(shadowRay.hasIntersection() && shadowRay.getClosestIntersection() < glm::distance(origin, lightPoint))
-				//{
-				//	// Not visible, so no light contribution
-				//	continue;
-				//}
-
-				//Direction shadowRayDirection = glm::normalize(shadowRay.getEnd() - shadowRay.getStart());
-				//double alpha = glm::dot(-normal, shadowRayDirection);	
-				//double beta = glm::clamp((double)glm::dot(lightTriangle.getNormal(), -shadowRayDirection), 0.0, 1.0);
-
-				//double geometric = alpha * beta / pow(glm::distance(origin, lightPoint), 2.0);
-				//lightContribution += lightTriangle.getColor() * light.getEmission() * geometric;
-				
 			}
 		}
 	}
-
+	// lightCount takes into account for how many shadow rays we have used for each lightsource
 	return lightContribution * lightArea / (double)lightCount;
 }
 
@@ -218,6 +253,9 @@ void Scene::createRoom() {
 
 	// Set the material of all triangles making up the room to diffuse
 	for (size_t i = 0; i < _triangles.size(); i++) {
-		_triangles[i].updateMaterial(0);
+		if (i < 4)
+			_triangles[i].updateMaterial(1);
+		else
+			_triangles[i].updateMaterial(0);
 	}
 }

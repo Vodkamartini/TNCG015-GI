@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include <random>
 #include <glm/glm.hpp>
 
@@ -18,20 +19,29 @@ typedef glm::dvec3 ColorDbl;
 // Define constants
 const float EPSILON = 0.000000001f;
 const float M_PI = 3.14159265358979323846f;
+
 const std::size_t MAX_DEPTH = 5;
 const std::size_t SHADOW_RAY_COUNT = 2;
+
 const std::size_t DEFAULT_WIDTH = 800;
 const std::size_t DEFAULT_HEIGHT = 800;
+
 const ColorDbl RED(255.0, 0, 0);
 const ColorDbl GREEN(0, 255.0, 0);
 const ColorDbl BLUE(0, 0, 255.0);
 
 // Random stuff
-static std::default_random_engine GENERATOR;
-static std::uniform_real_distribution<double> DISTR(0.0, 1.0);
+static std::uniform_real_distribution<double> DISTRIBUTION(0.0, 1.0);
 
-double uniformRand();
-double randMinMax(const double& min, const double& man);
+inline double uniformRand() {
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::mt19937 generator(seed);
+	return DISTRIBUTION(generator);
+}
+
+inline double randMinMax(const double& min, const double& max) {
+	return min + uniformRand() * (max - min);
+}
 
 inline float deg2rad(const float& deg) {
 	return deg * M_PI / 180;
