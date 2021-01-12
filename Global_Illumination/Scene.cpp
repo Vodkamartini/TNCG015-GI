@@ -64,25 +64,52 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 						double xi = uniformRand();
 						double yj = uniformRand();
 
-						Direction inDirection = glm::normalize(ray.getEnd() - ray.getStart());
+						//Direction inDirection = glm::normalize(ray.getEnd() - ray.getStart());
 
 						// v1 and v2 are two orthogonal vectors that lie in the surface hit plane
-						Direction v1 = glm::normalize(-inDirection - glm::dot(-inDirection, ray.getIntersectionNormal() * ray.getIntersectionNormal()));
-						Direction v2 = -glm::cross(v1, ray.getIntersectionNormal());
+						//Direction v1 = glm::normalize(-inDirection - glm::dot(-inDirection, ray.getIntersectionNormal()) * ray.getIntersectionNormal());
+						//Direction v2 = -glm::cross(v1, ray.getIntersectionNormal());
 
+						// The out vector can be found using spherical coordinats (r = 1)
 						float altitude = 2.f * M_PI * xi;
 						float azimuth = asin(sqrt(yj));
 
-						Direction outDirection = glm::normalize(glm::rotate(ray.getIntersectionNormal(), azimuth, v2));
-						outDirection = glm::normalize(glm::rotate(outDirection, altitude, ray.getIntersectionNormal()));
+						float localX = cos(azimuth) * sin(altitude);
+						float localY = sin(azimuth) * sin(altitude);
+						float localZ = cos(altitude);
 
-						Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+						Vertex localCoordinates(localX, localY, localZ, 1.0);
+
+						// Calculate matrix that will transform our local spherical coordinates to global coordinates
+						glm::vec4 Z(ray.getIntersectionNormal(), 0);
+						glm::vec4 I(ray.getIntersectionPoint() - ray.getStart());
+						glm::vec4 X(glm::normalize(I - (glm::dot(I, Z)) * Z));
+						glm::vec4 Y(glm::cross(glm::vec3(-X), glm::vec3(Z)), 0);
+						
+						glm::vec4 modIP = glm::vec4(glm::vec3(-ray.getIntersectionPoint()), 1.0f);
+						glm::mat4x4 M = glm::mat4(X, Y, Z, glm::vec4(0, 0, 0, 1)) *
+							glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), modIP);
+						
+						glm::mat4x4 invM = glm::inverse(M);
+
+						Vertex globalCoordinates = invM * localCoordinates;
+
+						Ray reflectedRay(ray.getIntersectionPoint() + (globalCoordinates - ray.getIntersectionPoint()) * 0.001f, globalCoordinates);
+						this->castRay(reflectedRay, depth + 1);
+
+						//Direction outDirection = glm::normalize(glm::rotate(ray.getIntersectionNormal(), azimuth, v2));			// Shouldn't we rotate inDirection along normal?
+						//Direction outDirection = glm::normalize(glm::rotate(inDirection, azimuth, ray.getIntersectionNormal()));	// Like this?
+						//outDirection = glm::normalize(glm::rotate(outDirection, altitude, ray.getIntersectionNormal()));
+
+						//Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
+
+						const double REFLECTIVITY = 0.8 / M_PI;
 
 						// Update ray color, should maybe be done in a cleaner fashion...
 						ray.updateIntersection(
 							ray.getClosestIntersection(),
 							ray.getIntersectionPoint(),
-							ray.getColor() * (0.8 / M_PI),
+							ray.getColor() * REFLECTIVITY + reflectedRay.getColor() * (1 - REFLECTIVITY),
 							ray.getIntersectionNormal(),
 							ray.getIntersectionMaterial()
 						);
@@ -123,7 +150,16 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 				}
 				case LIGHT_SOURCE:
 				{
+					const double LIGHT_EMISSION = 1.0;
 					// Light sources should not spawn any new rays
+					ray.updateIntersection(
+						ray.getClosestIntersection(),
+						ray.getIntersectionPoint(),
+						ray.getColor() * LIGHT_EMISSION,
+						ray.getIntersectionNormal(),
+						ray.getIntersectionMaterial()
+					);
+					
 					break;
 				}
 			}
@@ -253,9 +289,9 @@ void Scene::createRoom() {
 
 	// Set the material of all triangles making up the room to diffuse
 	for (size_t i = 0; i < _triangles.size(); i++) {
-		if (i < 4)
-			_triangles[i].updateMaterial(1);
-		else
+		//if (i < 4)
+		//	_triangles[i].updateMaterial(1);
+		//else
 			_triangles[i].updateMaterial(0);
 	}
 }

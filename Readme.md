@@ -19,3 +19,12 @@
 ![Perfect reflectors introduced, now without wall mirror](Output/PerfectReflectors2.png)
 
 In the second image, the color at each ray-intersection is blended between the surface color and the color of the reflected ray. Shadow rays were also calculated at each ray-intersection spawned in the ray-tree.
+
+### "2020-01-12: Added diffuse reflections and refactored perfect reflectors"
+
+![Perfect reflectors without color blending](Output/PerfectReflectors3.png)
+![Diffuse reflections introduced](Output/DiffuseReflections.png)
+
+The color blending between the hit surfaces' colors and the reflected rays was removed for perfect reflectors. Now the color at each intersection is determined only by direct light contribution and the color of the reflected ray.
+
+Diffuse reflections were added as well by sampling random rays on the hemisphere around the hit position. The outgoing direction is calculated using local spherical coordinates and then transforming them into global coordinates. There are still some issues with noise in the image that need to be dealt with.
