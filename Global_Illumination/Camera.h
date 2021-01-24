@@ -27,6 +27,9 @@ private:
 	Vertex _eye2;
 	bool _using_eye1 = true;
 
+	int spp = 20;
+	int subPixels = 4;
+
 	struct Pixel {
 		ColorDbl _color;
 		std::vector<Ray> _rays;

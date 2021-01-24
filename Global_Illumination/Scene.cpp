@@ -45,30 +45,29 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 		}
 		// Else find out wether we should spawn a new ray or not
 		else {
-			// Cast a shadow ray to calculate direct light contribution
-			ColorDbl lightContribution = this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
-			ray.updateIntersection(
-				ray.getClosestIntersection(),
-				ray.getIntersectionPoint(),
-				ray.getColor() * lightContribution,
-				ray.getIntersectionNormal(),
-				ray.getIntersectionMaterial()
-			);
 			switch (ray.getIntersectionMaterial()) {
 				case LAMBERTIAN:
 				{
-					double  alpha = 0.5;
+				
+					// Cast a shadow ray to calculate direct light contribution
+					ColorDbl lightContribution = this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
+					ray.updateIntersection(
+						ray.getClosestIntersection(),
+						ray.getIntersectionPoint(),
+						ray.getColor() * lightContribution,
+						ray.getIntersectionNormal(),
+						ray.getIntersectionMaterial()
+					);
+
+
+					double  alpha = 0.25;
 					// Russian roulette
 					if (1 - alpha > randMinMax(0, 1)) {
 
-						double xi = uniformRand();
-						double yj = uniformRand();
 
-						//Direction inDirection = glm::normalize(ray.getEnd() - ray.getStart());
+						double xi = randMinMax(EPSILON, 2.0 * (double)M_PI - (double)EPSILON);  //uniformRand();
+						double yj = randMinMax(EPSILON, 2.0 * (double)M_PI - (double)EPSILON);  //uniformRand();
 
-						// v1 and v2 are two orthogonal vectors that lie in the surface hit plane
-						//Direction v1 = glm::normalize(-inDirection - glm::dot(-inDirection, ray.getIntersectionNormal()) * ray.getIntersectionNormal());
-						//Direction v2 = -glm::cross(v1, ray.getIntersectionNormal());
 
 						// The out vector can be found using spherical coordinats (r = 1)
 						float altitude = 2.f * M_PI * xi;
@@ -97,28 +96,26 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 						Ray reflectedRay(ray.getIntersectionPoint() + (globalCoordinates - ray.getIntersectionPoint()) * 0.001f, globalCoordinates);
 						this->castRay(reflectedRay, depth + 1);
 
-						//Direction outDirection = glm::normalize(glm::rotate(ray.getIntersectionNormal(), azimuth, v2));			// Shouldn't we rotate inDirection along normal?
-						//Direction outDirection = glm::normalize(glm::rotate(inDirection, azimuth, ray.getIntersectionNormal()));	// Like this?
-						//outDirection = glm::normalize(glm::rotate(outDirection, altitude, ray.getIntersectionNormal()));
-
-						//Ray reflectedRay(ray.getIntersectionPoint() + (Vertex(outDirection, 1.0) - ray.getIntersectionPoint()) * 0.001f, Vertex(outDirection, 1.0));
-
-						const double REFLECTIVITY = 0.8 / M_PI;
+						const double REFLECTIVITY = 0.8 / ((double)M_PI * ((double)depth + 1.0));
 
 						// Update ray color, should maybe be done in a cleaner fashion...
 						ray.updateIntersection(
 							ray.getClosestIntersection(),
 							ray.getIntersectionPoint(),
-							ray.getColor() * REFLECTIVITY + reflectedRay.getColor() * (1 - REFLECTIVITY),
+							(ray.getColor() * (1 - REFLECTIVITY)) + (reflectedRay.getColor() * (REFLECTIVITY)),
 							ray.getIntersectionNormal(),
 							ray.getIntersectionMaterial()
 						);
+						;
 					}
 
 					break;
 				}
 				case PERFECT_REFLECTOR:
 				{
+					// Cast a shadow ray to calculate direct light contribution
+					ColorDbl lightContribution =  this->castShadowRay(ray.getIntersectionPoint(), ray.getIntersectionNormal());
+
 					if (depth < MAX_DEPTH) {
 						// Perfect reflectors should always reflect a new ray as long as we haven't exceeded ray-threshold
 						Direction inDirection = ray.getIntersectionPoint() - ray.getStart();
@@ -150,16 +147,15 @@ bool Scene::castRay(Ray& ray, size_t depth) {
 				}
 				case LIGHT_SOURCE:
 				{
-					const double LIGHT_EMISSION = 1.0;
+					const double LIGHT_EMISSION = 255;
 					// Light sources should not spawn any new rays
 					ray.updateIntersection(
 						ray.getClosestIntersection(),
 						ray.getIntersectionPoint(),
-						ray.getColor() * LIGHT_EMISSION,
+						ray.getColor()* LIGHT_EMISSION,
 						ray.getIntersectionNormal(),
 						ray.getIntersectionMaterial()
 					);
-					
 					break;
 				}
 			}
@@ -198,7 +194,10 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 
 					// Since both vectors are normalized, the dot product returns the cosine between the two vectors
 					// Negative means that the shadow ray and light source are facing eachother which means that we still want that sweet contribution
-					double dt = glm::abs(glm::dot(shadowRayDir, lightNormal));
+					double dt = glm::dot(shadowRayDir, lightNormal);
+					if(dt < 0 ) {
+						dt *= -1;
+					}
 
 					lightContribution += shadowRay.getColor() * dt;
 				}
@@ -206,7 +205,7 @@ ColorDbl Scene::castShadowRay(const Vertex& origin, const Direction& normal) {
 		}
 	}
 	// lightCount takes into account for how many shadow rays we have used for each lightsource
-	return lightContribution * lightArea / (double)lightCount;
+	return lightContribution / (double)lightCount;
 }
 
 void Scene::addLightsource(LightSource& lightsource) {

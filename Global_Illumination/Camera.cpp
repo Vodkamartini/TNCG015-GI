@@ -34,12 +34,12 @@ void Camera::render(Scene* scene) {
 			#define SUPERSAMPLING
 #ifdef SUPERSAMPLING
 			double yDiff, zDiff;
-			const int number_of_subsample_rays = 4;
+			const int number_of_subsample_rays = 64;
 			for (int j = 0; j < number_of_subsample_rays; j++) {
 
 				yDiff = randMinMax(-halfPixelY, halfPixelY);
 				zDiff = randMinMax(-halfPixelZ, halfPixelZ);
-
+				
 				Ray thisRay(activeEye, Vertex(x, y + yDiff, z + zDiff, 1.0f));
 				if (scene->castRay(thisRay, 0))
 				{
@@ -47,6 +47,8 @@ void Camera::render(Scene* scene) {
 				}
 				else
 					printf("\nERROR::Camera in function 'render': No ray intersections found.\n");
+					
+				
 			}
 
 			finalColor /= number_of_subsample_rays;
@@ -75,6 +77,7 @@ void Camera::render(Scene* scene) {
 void Camera::createImage() {
 	printf("\nWriting image to file...\n");
 	double max = findMaxIntensity();
+	printf("\nMax value: %f", max);
 	if (max == 0)
 		max = EPSILON;
 

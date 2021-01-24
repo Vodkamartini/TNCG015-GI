@@ -19,10 +19,10 @@ int main() {
 	Triangle t3(v1, v3, v2, RED);
 
 	std::vector<Triangle> tetrahedronTriangles = { t0, t1, t2, t3 };
-	Tetrahedron* tetrahedron = new Tetrahedron(tetrahedronTriangles, 1, Vertex(9.0f, 3.0f, -4.0f, 1.0f));
+	Tetrahedron* tetrahedron = new Tetrahedron(tetrahedronTriangles, 1, Vertex(6.0f, 2.5f, -4.0f, 1.0f));
 
 	// Sphere
-	Sphere* sphere = new Sphere(Vertex(5.0f, -3.0f, 1.0f, 1.0f), 1.0f, ColorDbl(255, 211, 0), 1, Vertex(5.0f, -3.0f, 1.0f, 1.0f));
+	Sphere* sphere = new Sphere(Vertex(5.0f, -3.0f, 1.0f, 1.0f), 1.5f, ColorDbl(255, 211, 0), 1, Vertex(5.0f, -3.0f, 1.0f, 1.0f));
 
 
 	//LightSource
@@ -32,10 +32,10 @@ int main() {
 	//    |   \ |           ----> y
 	//    c-----d
 
-	Vertex a(0.5f, -0.5f, 0.0f, 1.0f);
-	Vertex b(0.5f, 0.5f, 0.0f, 1.0f);
-	Vertex c(-0.5f, -0.5f, 0.0f, 1.0f);
-	Vertex d(-0.5f, 0.5f, 0.0f, 1.0f);
+	Vertex a(1.f, -1.f, 0.0f, 1.0f);
+	Vertex b(1.0f, 1.0f, 0.0f, 1.0f);
+	Vertex c(-1.f, -1.f, 0.0f, 1.0f);
+	Vertex d(-1.f, 1.f, 0.0f, 1.0f);
 
 	Triangle lightTri1(a, c, d, ColorDbl(255.0));
 	Triangle lightTri2(a, d, b, ColorDbl(255.0));
